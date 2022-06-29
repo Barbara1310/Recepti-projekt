@@ -153,6 +153,7 @@ try {
         'CREATE TABLE IF NOT EXISTS p_recipes_rates (' .
             'id int NOT NULL PRIMARY KEY AUTO_INCREMENT,' .
 						'id_recipe int NOT NULL,' .
+						'id_user int NOT NULL,' .
             'rate int NOT NULL)'
     );
 
@@ -304,18 +305,18 @@ echo "Ubacio u tablicu p_recipes_ingredients.<br />";
 
 //ubacimo i ocjene na recepte
 try {
-    $st = $db->prepare('INSERT INTO p_recipes_rates(id_recipe, rate) VALUES (:id_recipe, :rate)');
+    $st = $db->prepare('INSERT INTO p_recipes_rates(id_recipe, id_user, rate) VALUES (:id_recipe, :id_user, :rate)');
 
-		$st->execute(array('id_recipe' => 1 , 'rate' => 5 ));
-		$st->execute(array('id_recipe' => 1 , 'rate' => 4 ));
-		$st->execute(array('id_recipe' => 2 , 'rate' => 3 ));
-		$st->execute(array('id_recipe' => 2 , 'rate' => 5 ));
-		$st->execute(array('id_recipe' => 3 , 'rate' => 2 ));
-		$st->execute(array('id_recipe' => 3 , 'rate' => 5 ));
-		$st->execute(array('id_recipe' => 3 , 'rate' => 4 ));
-		$st->execute(array('id_recipe' => 4 , 'rate' => 5 ));
-		$st->execute(array('id_recipe' => 4 , 'rate' => 3 ));
-		$st->execute(array('id_recipe' => 7 , 'rate' => 2 ));
+		$st->execute(array('id_recipe' => 1 , 'id_user' => 2, 'rate' => 5 ));
+		$st->execute(array('id_recipe' => 1 , 'id_user' => 3, 'rate' => 4 ));
+		$st->execute(array('id_recipe' => 2 , 'id_user' => 1, 'rate' => 3 ));
+		$st->execute(array('id_recipe' => 2 , 'id_user' => 5, 'rate' => 5 ));
+		$st->execute(array('id_recipe' => 3 , 'id_user' => 5, 'rate' => 2 ));
+		$st->execute(array('id_recipe' => 3 , 'id_user' => 4, 'rate' => 5 ));
+		$st->execute(array('id_recipe' => 3 , 'id_user' => 1, 'rate' => 4 ));
+		$st->execute(array('id_recipe' => 4 , 'id_user' => 5, 'rate' => 5 ));
+		$st->execute(array('id_recipe' => 4 , 'id_user' => 4, 'rate' => 3 ));
+		$st->execute(array('id_recipe' => 7 , 'id_user' => 3, 'rate' => 2 ));
 
 
 
