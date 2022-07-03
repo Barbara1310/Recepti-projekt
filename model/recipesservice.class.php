@@ -1,6 +1,30 @@
 <?php
 session_start();
 require_once __DIR__ . '/../app/db.class.php';
+require_once __DIR__ . '/recipe.class.php';
+require_once __DIR__ . '/category.class.php';
+
+function random_kategorije() //kategorije za postavljanje cookie
+{
+    $db = DB::getConnection();
+
+    try{
+       $st = $db->prepare( 'SELECT COUNT(*) FROM p_categories' );
+       $st->execute( );
+   }catch( PDOException $e ){echo $e->getMessage();}
+   $row = $st->fetch();
+   if( $row === false ){
+       return false;
+   }
+   else{
+       $broj_kategorija=$row[0];
+       return $broj_kategorija;
+    }
+}
+
+
+
+
 
 class RecipesService{
   public function isUserInBase( $username, $password ) //funckija koja provjerava je li korisnik koji se pokušava ulogirati u bazi
@@ -30,7 +54,18 @@ class RecipesService{
         $st->execute( ['username' => $username] );
         $id_user = $st->fetch()['id'];
         $_SESSION['id_user'] = $id_user;
+       
     }
+
+    public function triKategorije() //tu ćemo spremit tri različite kategorije
+    {
+        $db = DB::getConnection();
+        $st = $db->prepare( 'SELECT DISTINCT id_category FROM p_categories' );
+
+
+    }
+
+    
 
 
 }
