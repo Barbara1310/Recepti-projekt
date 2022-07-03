@@ -4,29 +4,9 @@ require_once __DIR__ . '/../app/db.class.php';
 require_once __DIR__ . '/recipe.class.php';
 require_once __DIR__ . '/category.class.php';
 
-function random_kategorije() //kategorije za postavljanje cookie
-{
-    $db = DB::getConnection();
-
-    try{
-       $st = $db->prepare( 'SELECT COUNT(*) FROM p_categories' );
-       $st->execute( );
-   }catch( PDOException $e ){echo $e->getMessage();}
-   $row = $st->fetch();
-   if( $row === false ){
-       return false;
-   }
-   else{
-       $broj_kategorija=$row[0];
-       return $broj_kategorija;
-    }
-}
-
-
-
-
-
 class RecipesService{
+
+
   public function isUserInBase( $username, $password ) //funckija koja provjerava je li korisnik koji se pokušava ulogirati u bazi
   {
     $db = DB::getConnection();
@@ -64,6 +44,36 @@ class RecipesService{
 
 
     }
+
+    public function getTodayRecipes() //vraća polje koje sadrži id-jeve današnjih recepata 
+    {
+        $db = DB::getConnection();
+        $st = $db->prepare( 'SELECT * FROM p_recepti_dana' );
+        $st->execute();
+        $današnji=[];
+        while($row = $st-> fetch())
+        {
+            $današnji[]=$row['id_recipe'];
+        }
+        return $današnji;
+    }
+    public function getRecipeById( $id )
+	{
+		try
+		{
+			$db = DB::getConnection();
+			$st = $db->prepare( 'SELECT * FROM p_recipes WHERE id=:id' );
+			$st->execute( array( 'id' => $id ) );
+		}
+		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+
+		$row = $st->fetch();
+		if( $row === false )
+			return null;
+		else
+			return new Recipe( $row['id'], $row['title'], $row['description'] , $row['link'], $row['duration'], $row['id_user']);
+	}
+
 
     
 

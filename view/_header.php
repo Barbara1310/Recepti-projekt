@@ -15,6 +15,14 @@
 		text-align: center;
 		color: red;
 	  }
+    .column {
+  float: left;
+  width: 25%;
+}
+.content {
+  background-color: white;
+  padding: 10px;
+}
   </style>
 
 </head>

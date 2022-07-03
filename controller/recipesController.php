@@ -7,8 +7,11 @@ class recipesController
     {
       $title= $_SESSION['username'] . ', što ti se danas kuha?';
       $rs=new RecipesService();
-
-      
+      $recepti_dana=[];
+      $recepti_dana=$rs-> getTodayRecipes();
+      $recepti=[];
+      for($i=0;$i<3;$i++)
+        $recepti[]=$rs->getRecipeById($recepti_dana[$i]);
       require_once __DIR__ . '/../view/naslovna.php';
 
     }
