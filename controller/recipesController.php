@@ -51,8 +51,8 @@ class recipesController
 
   public function dodaj() //ovdje će se dodavati novi recepti
     {
-      $title='Novi recept';
-
+      $title='';
+      require_once __DIR__ . '/../view/dodaj_recept.php'; //
 
 
 
