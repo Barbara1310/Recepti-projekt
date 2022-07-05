@@ -19,40 +19,46 @@ class recipesController
   public function recepti() //ovdje će se pokazivati svi recepti ulogiranog autora
     {
       $title='Moji recepti';
-      
+      $rs = new RecipesService();
+      $recepti = [];
+      $recepti = $rs->getRecipeByUserId($_SESSION['id_user']);
 
-      
+     require_once __DIR__ . '/../view/moji_recepti.php';
 
-    }  
+    }
 
   public function favoriti() //ovdje će se pokazivati svi favoriti ulogiranog autora
     {
       $title='Moji favoriti';
-      
+      $rs = new RecipesService();
+      $recepti = [];
+      $recepti = $rs->getMyFavourites();
 
-      
+      require_once __DIR__ . '/../view/moji_recepti.php'; //isti je view kao i za moje recepte pa možemo koristiti taj ponovno
+
+
 
     }
-    
+
   public function pretraga() //ovdje će se pretraživati svi recepti
     {
       $title='Pretraži recepte';
-     
 
-      
+
+
 
     }
-    
+
   public function dodaj() //ovdje će se dodavati novi recepti
     {
       $title='Novi recept';
-     
 
-      
 
-    }   
-  
-    
+
+
+    }
+
+
 
 }
 

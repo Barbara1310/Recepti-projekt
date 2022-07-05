@@ -23,6 +23,16 @@
   background-color: white;
   padding: 10px;
 }
+.prvidiv{
+  width: 400px;
+  height: 300px;
+  margin-right: auto;
+  margin-left: auto;
+}
+.tekst {
+  background-color: #F75D59;
+  padding: 10px;
+}
   </style>
 
 </head>
@@ -41,10 +51,10 @@
       <li class="nav-item"><a class="nav-link" href="recipes.php?rt=recipes/favoriti">Moji favoriti</a></li>
       <li class="nav-item"><a class="nav-link" href="recipes.php?rt=recipes/pretraga">Pretraži recepte</a></li>
 	  <li class="nav-item"><a class="nav-link" href="recipes.php?rt=recipes/dodaj">Dodaj novi recept</a></li>
+    <li class="nav-item"><a class="nav-link" href="recipes.php?rt=users/logout">Odjavi se</a></li>
     </ul>
   </div>
 </nav>
 
 
 <h3 class="h3 my-2 font-weight-light"><?php echo $title; ?></h3>
-	

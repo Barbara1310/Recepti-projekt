@@ -25,6 +25,10 @@ try
 	if( $st->rowCount() > 0 )
 		$has_tables = true;
 
+	$st->execute( array( 'tblname' => 'p_favourites' ) );
+	if( $st->rowCount() > 0 )
+		$has_tables = true;
+
   $st->execute( array( 'tblname' => 'p_recipes_ingredients' ) );
 	if( $st->rowCount() > 0 )
 		$has_tables = true;
@@ -100,6 +104,21 @@ try {
 }
 
 echo "Napravio tablicu p_categories.<br />";
+
+try {
+    $st = $db->prepare(
+        'CREATE TABLE IF NOT EXISTS p_favourites (' .
+            'id int NOT NULL PRIMARY KEY AUTO_INCREMENT,' .
+            'id_recipe int NOT NULL,' .
+            'id_user int NOT NULL)'
+    );
+
+    $st->execute();
+} catch (PDOException $e) {
+    exit("PDO error [create p_favourites]: " . $e->getMessage());
+}
+
+echo "Napravio tablicu p_favourites.<br />";
 
 try {
     $st = $db->prepare(
@@ -216,6 +235,24 @@ try {
 }
 
 echo "Ubacio u tablicu p_categories.<br />";
+
+//Ubacimo favorite u p_favourites - svaki korisnik odabire neke favorite od recepata
+try {
+    $st = $db->prepare('INSERT INTO p_favourites(id_recipe, id_user) VALUES (:id_recipe, :id_user)');
+
+    $st->execute(array('id_recipe' => 1 , 'id_user' => 2 ));
+		$st->execute(array('id_recipe' => 2 , 'id_user' => 1 ));
+		$st->execute(array('id_recipe' => 4 , 'id_user' => 1 ));
+		$st->execute(array('id_recipe' => 4 , 'id_user' => 4 ));
+		$st->execute(array('id_recipe' => 3 , 'id_user' => 4 ));
+
+
+
+} catch (PDOException $e) {
+    exit("PDO error [insert p_favourites]: " . $e->getMessage());
+}
+
+echo "Ubacio u tablicu p_favourites.<br />";
 
 //Ubacimo u p_recipe_categories gdje povezujemo jela i kategorije
 try {
