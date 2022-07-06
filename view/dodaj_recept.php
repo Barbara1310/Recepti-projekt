@@ -68,6 +68,7 @@
           <h4>Dodaj recept</h4>
         </div>
         <div class="card-body p-4">
+          <div id="show_alert"></div>
           <form class="#" method="post" id="add_form">
             <div id="show_item">
               <div class="row">
@@ -123,7 +124,28 @@
        $(row_item).remove();
 
      }); 
-  });
+     //tu ćemo napisati ajax zahtjev kako bismo poslali te podatke od recepta i onda ih spremili u bazu
+     $("#add_form").submit(function(e){
+        e.preventDefault();
+        $("#add_btn").val('Dodajem...');
+        //console.log("tu sam");
+
+        $.ajax({
+          url: '../Recepti-projekt/controller/action.php',
+          method: 'post',
+          data: $(this).serialize(),
+          success: function(response){
+          //console.log(response);
+            $("#add_btn").val('Add');
+            $("#add_form")[0].reset();
+            $(".append_item").remove();
+            $("#show_alert").html('<div class="alert alert-success" role="alert">Uspješno dodano</div>');
+          }
+
+        });
+     });
+    });
+
 
 </script>
 </body>

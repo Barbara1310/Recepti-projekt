@@ -126,6 +126,45 @@ class RecipesService{
 
    }
 
+   public function createNewRecipe($title, $description, $link, $duration, $id_user)
+   {
+       $db = DB::getConnection();
+        $st = $db->prepare( "INSERT INTO p_recipes (id, title, description, link, duration, id_user)
+                                VALUES (NULL, :title, :description, :link, :duration, :id_user)" );
+
+
+        $st->bindParam(':title', $title);
+        $st->bindParam(':description', $description);
+        $st->bindParam(':link', $link);
+        $st->bindParam(':duration', $duration);
+        $st->bindParam(':id_user', $id_user);
+        $st->execute();
+
+   }
+   public function getRecipeIdByLink($link)
+   {
+      $db = DB::getConnection();
+      $st = $db->prepare( 'SELECT id FROM p_recipes WHERE link=:link' );
+      $st->execute( ['link' => $link] );
+      $id_recipe = $st->fetch()['id'];
+
+      return $id_recipe;
+
+   }
+   public function insertIngredient($id_recipe, $amount, $ingredient)
+   {
+      $db = DB::getConnection();
+      $st = $db->prepare( "INSERT INTO p_recipes_ingredients (id, id_recipe, amount, ingredient)
+                              VALUES (NULL, :id_recipe, :amount, :ingredient)" );
+
+
+      $st->bindParam(':id_recipe', $id_recipe);
+      $st->bindParam(':amount', $amount);
+      $st->bindParam(':ingredient', $ingredient);
+      $st->execute();
+
+   }
+
 
 
 }
