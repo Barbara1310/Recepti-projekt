@@ -60,6 +60,7 @@
 
 <h3 class="h3 my-2 font-weight-light"><?php echo $title; ?></h3>
 
+<!-- Tu ide forma za unos recepta -->
 <div class="container">
   <div class="row my-4">
     <div class="col-lg-10 mx-auto">

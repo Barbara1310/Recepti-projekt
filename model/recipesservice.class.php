@@ -33,7 +33,13 @@ class RecipesService{
         $st = $db->prepare( 'SELECT id FROM p_users WHERE username=:username' );
         $st->execute( ['username' => $username] );
         $id_user = $st->fetch()['id'];
-        $_SESSION['id_user'] = $id_user;
+        $_SESSION['id_user'] = $id_user; //postavi se id u session
+
+        $db = DB::getConnection(); //ovdje će se postavit is_admin u session da znamo je li trenutni korisnik admin
+        $st = $db->prepare( 'SELECT is_admin FROM p_users WHERE username=:username' );
+        $st->execute( ['username' => $username] );
+        $is_admin = $st->fetch()['is_admin'];
+        $_SESSION['is_admin'] = $is_admin;
 
     }
 
@@ -184,6 +190,18 @@ class RecipesService{
 
      $st->bindParam(':id_recipe', $id_recipe);
      $st->bindParam(':id_category', $id_category);
+     $st->execute();
+
+   }
+
+   public function addNewCategory($name)
+   {
+     $db = DB::getConnection();
+     $st = $db->prepare( "INSERT INTO p_categories (id, name)
+                             VALUES (NULL, :name)" );
+
+
+     $st->bindParam(':name', $name);
      $st->execute();
 
    }

@@ -16,12 +16,14 @@ class UsersController{
       $username = $_POST['username'];
       $password = $_POST['password'];
       $rs = new RecipesService;
+      
 
       if($rs->isUserInBase($username, $password)) //provjera je li korisnik u bazi, ako je, stavimo u session
       {
         $_SESSION['username'] = $_POST['username']; //zelimo jos u session ubaciti i id korisnika
         $rs->setUserId( $username ); //ta fja nam vadi id korisnika iz baze i ubaci ga u session
         header('Location: recipes.php?rt=recipes/index'); //idi na recipesController i index fju
+      	
       }
       else {
         require_once __DIR__ . '/../view/login.php';
