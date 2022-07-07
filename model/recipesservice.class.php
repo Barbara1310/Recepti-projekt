@@ -57,7 +57,7 @@ class RecipesService{
         }
         return $današnji;
     }
-    public function getRecipeById( $id )
+    public function getRecipeById( $id ) //dohvaćanje recepta pomoću id-ja
 	{
 		try
 		{
@@ -92,7 +92,7 @@ class RecipesService{
 
    }
 
-   public function getMyFavourites()
+   public function getMyFavourites() //dohvaćanje favorita ulogirane osobe
    {
      $favoriti = [];
      $recepti = [];
@@ -126,7 +126,7 @@ class RecipesService{
 
    }
 
-   public function createNewRecipe($title, $description, $link, $duration, $id_user)
+   public function createNewRecipe($title, $description, $link, $duration, $id_user) //stvaranje novog recepta u bazi
    {
        $db = DB::getConnection();
         $st = $db->prepare( "INSERT INTO p_recipes (id, title, description, link, duration, id_user)
@@ -141,7 +141,7 @@ class RecipesService{
         $st->execute();
 
    }
-   public function getRecipeIdByLink($link)
+   public function getRecipeIdByLink($link) //dohvaćanje recepta preko linka
    {
       $db = DB::getConnection();
       $st = $db->prepare( 'SELECT id FROM p_recipes WHERE link=:link' );
@@ -151,7 +151,7 @@ class RecipesService{
       return $id_recipe;
 
    }
-   public function insertIngredient($id_recipe, $amount, $ingredient)
+   public function insertIngredient($id_recipe, $amount, $ingredient) //ubacuje sastojke i količinu u bazu p_recipes_ingredients
    {
       $db = DB::getConnection();
       $st = $db->prepare( "INSERT INTO p_recipes_ingredients (id, id_recipe, amount, ingredient)
@@ -164,7 +164,29 @@ class RecipesService{
       $st->execute();
 
    }
+   public function getAllCategories(){
+       $categories = [];
+       $db = DB::getConnection();
+       $st = $db->prepare( 'SELECT * FROM p_categories' );
+       $st->execute();
 
+       while( $row = $st->fetch() ){
+           $categories[] = new Category( $row['id'], $row['name']);
+       }
+       return $categories;
+   }
+   public function insertCategorysOfRecipe($id_recipe, $id_category)
+   {
+     $db = DB::getConnection();
+     $st = $db->prepare( "INSERT INTO p_recipes_categories (id, id_recipe, id_category)
+                             VALUES (NULL, :id_recipe, :id_category)" );
+
+
+     $st->bindParam(':id_recipe', $id_recipe);
+     $st->bindParam(':id_category', $id_category);
+     $st->execute();
+
+   }
 
 
 }

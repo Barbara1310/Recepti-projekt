@@ -20,6 +20,11 @@ require_once __DIR__ . '/../model/recipesservice.class.php';
     //echo $_POST['ingredient_name'][$i];
     $rs->insertIngredient($id_recepta, $_POST['ingredient_quantity'][$i], $_POST['ingredient_name'][$i]);
   }
+  for($i = 0; $i < count($_POST['categories']); $i++)
+  {
+    $rs->insertCategorysOfRecipe($id_recepta, $_POST['categories'][$i]); //u value smo stavili id kategorije pa to direktno spremamo
+  }
+
   echo "Uspješno dodano!";
 
 ?>

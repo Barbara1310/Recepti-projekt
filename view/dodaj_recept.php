@@ -92,6 +92,21 @@
               <input type="text" name="link" placeholder="link fotografije jela"> 
               <textarea name="opis" id="" cols="30" rows="10" placeholder="Ovdje opišite postupak"></textarea>
             </div>
+            <p>Označite kojoj kategoriji jelo pripada: </p>
+              <?php   //tu zapravo ispisujemo sve kategorije u obliku checkboxa kako bismo onda u bazu mogli pospremiti id tog recepta i njegove kategorije (moguće više kategorija)
+              
+              for($i=0; $i<count($kategorije); $i++)
+              {
+                ?>
+                  <input type="checkbox" name="categories[]" value="<?php echo $kategorije[$i]->id ?>" id="<?php echo $kategorije[$i]->name ?>">
+                   <label for="<?php echo $kategorije[$i]->name ?>"> <?php echo $kategorije[$i]->name ?> </label>
+
+               <?php 
+              }
+              ?>
+            <div>
+
+            </div>
 
             <div class="">
               <input type="submit" id="add_btn" value="Dodaj" class="btn btn-primary w-25">

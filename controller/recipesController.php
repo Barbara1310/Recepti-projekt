@@ -52,6 +52,9 @@ class recipesController
   public function dodaj() //ovdje će se dodavati novi recepti
     {
       $title='';
+      $rs = new RecipesService();
+      $kategorije = [];
+      $kategorije = $rs->getAllCategories();
       require_once __DIR__ . '/../view/dodaj_recept.php'; //
 
 
