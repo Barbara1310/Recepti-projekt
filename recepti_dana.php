@@ -1,7 +1,8 @@
 <?php
 require_once __DIR__ . '/app/db.class.php';
 
-
+//ovo je skripta koja se izvršava jednom dnevno i stavlja slučajne recepte na početnu stranicu
+// koristi se crontab za svakodnevno izvršavanje u 23:59
 
 $db = DB::getConnection();
 $db->exec(
@@ -43,7 +44,8 @@ $db->exec(
             $st = $db->prepare('SELECT * FROM p_recipes_categories ORDER BY RAND() LIMIT 1');
             $st->execute();
             $row =$st->fetch();
-            $istina=0; //pretpostavimo da nemamo tu kategoriju u bazi taj dan
+            $istina=0; //pretpostavimo da nemamo tu kategoriju u bazi taj dan, niti taj recept
+
             
             $st2= $db->prepare('SELECT * FROM p_recepti_dana');
             $st2->execute();
@@ -52,6 +54,11 @@ $db->exec(
                 if($row['id_category'] === $row2['id_category'])
                    { $istina=1;
                     break;}
+                if($row['id_recipe'] === $row2['id_recipe']) 
+                {
+                    $istina=1;
+                    break;
+                }   
             }
 
             if($istina === 0)
