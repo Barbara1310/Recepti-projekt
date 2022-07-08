@@ -28,6 +28,64 @@ class RecipesService{
     }
    }
 
+
+  // funkcija koja provjerava postoji li neki username u bazi
+  public function isUsernameInBase( $username )
+  {
+    $db = DB::getConnection();
+
+    try{
+       $st = $db->prepare( 'SELECT username FROM p_users WHERE username=:username' );
+       $st->execute( ['username' => $username] );
+   }catch( PDOException $e ){echo $e->getMessage();}
+   $row = $st->fetch();
+   if( $row === false ){
+       return false;
+   }
+   else{
+        return true;
+    }
+   }
+
+  // funkcija koja provjerava postoji li neki email u bazi
+  public function isEmailInBase( $email )
+  {
+    $db = DB::getConnection();
+
+    try{
+       $st = $db->prepare( 'SELECT email FROM p_users WHERE email=:email' );
+       $st->execute( ['email' => $email] );
+   }catch( PDOException $e ){echo $e->getMessage();}
+   $row = $st->fetch();
+   if( $row === false ){
+       return false;
+   }
+   else{
+        return true;
+    }
+   }
+
+// funkcija koja dodaje novog korisnika u bazu
+  public function insertUserToBase( $username, $password, $email )
+  {
+    $db = DB::getConnection();
+
+    try{
+       $st = $db->prepare('INSERT INTO p_users(username, password_hash, email, has_registered, registration_sequence, is_admin) VALUES (:username, :password, :email, \'1\', \'abc\', \'0\')');
+           $st->execute(array('username' => $username, 'password' => password_hash($password, PASSWORD_DEFAULT), 'email' => $email));
+
+   }catch( PDOException $e ){echo $e->getMessage();}
+   $row = $st->rowCount();
+   if( $row === 0 ){
+        echo 'greskaaaa ';
+        echo $username . ' ' . $password . ' ' . $email;
+       return false;
+   }
+   else{
+        return true;
+    }
+   }
+
    public function setUserId( $username ){//fja koja uzima id od korisnika iz baze i ubaci ga u session
         $db = DB::getConnection();
         $st = $db->prepare( 'SELECT id FROM p_users WHERE username=:username' );
