@@ -20,8 +20,4 @@ if (isset($_GET['term'])) {
     //return json res
     return json_encode($res);
 }
-else{
-  echo 'okkkk';
-  return 'ok';
-}
 ?>
