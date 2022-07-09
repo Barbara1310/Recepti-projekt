@@ -48,8 +48,6 @@ class recipesController
       $kategorije = $rs->getAllCategories();
       require_once __DIR__ . '/../view/pretraga.php'; //
 
-
-
     }
 
   public function dodaj() //ovdje će se dodavati novi recepti

@@ -249,7 +249,6 @@ class RecipesService{
      $st->bindParam(':id_recipe', $id_recipe);
      $st->bindParam(':id_category', $id_category);
      $st->execute();
-
    }
 
    public function addNewCategory($name)
@@ -264,7 +263,6 @@ class RecipesService{
 
    }
 
-
 }
 
- ?>
+?>
