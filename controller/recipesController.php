@@ -35,9 +35,6 @@ class recipesController
       $recepti = $rs->getMyFavourites();
 
       require_once __DIR__ . '/../view/moji_recepti.php'; //isti je view kao i za moje recepte pa možemo koristiti taj ponovno
-
-
-
     }
 
   public function pretraga() //ovdje će se pretraživati svi recepti
@@ -46,8 +43,8 @@ class recipesController
       $rs = new RecipesService();
       $kategorije = [];
       $kategorije = $rs->getAllCategories();
+      $recepti_za_prikaz = [];
       require_once __DIR__ . '/../view/pretraga.php'; //
-
     }
 
   public function dodaj() //ovdje će se dodavati novi recepti
@@ -57,13 +54,18 @@ class recipesController
       $kategorije = [];
       $kategorije = $rs->getAllCategories();
       require_once __DIR__ . '/../view/dodaj_recept.php'; //
-
-
-
     }
 
+    public function handleSearch(){
+      $title='Pretraži recepte';
+      $sastojak = $_POST['sastojak'];
+      $kategorija = $_POST['kategorija'];
 
+      $rs = new RecipesService();
+      $recepti_za_prikaz = $rs->findRecipes($sastojak, $kategorija);
 
+      require_once __DIR__ . '/../view/pretraga.php'; //
+    }
 }
 
  ?>

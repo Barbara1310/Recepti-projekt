@@ -13,7 +13,7 @@ require_once __DIR__ . '/_header.php';
 </head>
 <body> 
 
-<form class="form" method="post" action="search.php">
+<form class="form" method="post" action="recipes.php?rt=recipes/handleSearch">
 <div class="container">
       <br>
     <label>Kategorija:</label>
@@ -40,5 +40,26 @@ require_once __DIR__ . '/_header.php';
      });
   });
 </script>
+
+
+<?php 
+
+if(count($recepti_za_prikaz) > 0){
+for($i = 0; $i < count($recepti_za_prikaz); $i += 1){
+  $recept = $recepti_za_prikaz[$i]
+    ?>
+    <div class="prvidiv">
+    <div class="tekst">
+      <img src="<?php  echo $recept->link; ?>" alt="slika" style="width:100%">
+      <h3><?php echo $recepti_za_prikaz[$i]->title; ?> </h3>
+    </div>
+  </div>
+  <br><br>
+
+<?php
+}
+}
+?>
+
 </body>
 </html>

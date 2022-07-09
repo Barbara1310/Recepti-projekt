@@ -263,6 +263,51 @@ class RecipesService{
 
    }
 
+   public function findRecipes($ingredient, $category){
+        $db = DB::getConnection();
+        $recipes_by_ingr = [];
+        $category_ids = [];
+        $recipes_in_category = [];
+
+        $st = $db->prepare( 'SELECT id_recipe FROM p_recipes_ingredients WHERE ingredient = :ingredient');
+        $st->bindParam(':ingredient', $ingredient);
+        $st->execute();
+
+       while( $row = $st->fetch() ){
+           array_push($recipes_by_ingr, $row['id_recipe']);
+       }
+
+        $st = $db->prepare( 'SELECT id FROM p_categories WHERE name = :name');
+        $st->bindParam(':name', $category);
+        $st->execute();
+
+        while( $row = $st->fetch() ){
+            array_push($category_ids, $row['id']);
+        }
+
+        $st = $db->prepare( 'SELECT id_recipe FROM p_recipes_categories WHERE id_category = :id_category');
+        $st->bindParam(':id_category', $category_ids[0]);
+        $st->execute();
+
+        while( $row = $st->fetch() ){
+            array_push($recipes_in_category, $row['id_recipe']);
+        }
+
+        $recipes_id = [];
+        for($i = 0; $i < count($recipes_by_ingr); $i += 1){
+            if(in_array($recipes_by_ingr[$i], $recipes_in_category)){
+                array_push($recipes_id, $recipes_by_ingr[$i]);
+            }
+        }
+
+        $recipes=[];
+        for($i=0;$i<count($recipes_id);$i++){
+            $recipes[]=$this->getRecipeById($recipes_id[$i]);
+        }
+        
+            return $recipes;
+        }
+
 }
 
 ?>
