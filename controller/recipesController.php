@@ -43,7 +43,10 @@ class recipesController
   public function pretraga() //ovdje će se pretraživati svi recepti
     {
       $title='Pretraži recepte';
-
+      $rs = new RecipesService();
+      $kategorije = [];
+      $kategorije = $rs->getAllCategories();
+      require_once __DIR__ . '/../view/pretraga.php'; //
 
 
 

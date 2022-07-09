@@ -231,11 +231,11 @@ class RecipesService{
    public function getAllCategories(){
        $categories = [];
        $db = DB::getConnection();
-       $st = $db->prepare( 'SELECT * FROM p_categories' );
+       $st = $db->prepare( 'SELECT id, name FROM p_categories' );
        $st->execute();
 
        while( $row = $st->fetch() ){
-           $categories[] = new Category( $row['id'], $row['name']);
+           array_push($categories, new Category( $row['id'], $row['name']));
        }
        return $categories;
    }
