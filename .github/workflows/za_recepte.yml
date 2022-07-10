@@ -1,0 +1,11 @@
+name: Master
+on:
+  schedule:
+    - cron: '53 0 * * *'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Recepti dana
+      run: php recepti_dana.php
