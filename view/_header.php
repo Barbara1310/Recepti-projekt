@@ -31,7 +31,7 @@
   margin-left: auto;
 }
 .tekst {
-  background-color: #F75D59;
+  background-color: #F9E3E3; /*  #F75D59;*/
   padding: 10px;
 }
   </style>

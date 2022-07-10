@@ -16,7 +16,7 @@ else{
         $controller = 'users';
     }
 
-    if( isset($parts[1]) && preg_match( '/^[A-Za-z ,.-]+$/', $parts[1] ) ){
+    if( isset($parts[1]) && preg_match( '/^[-a-z0-9_ \x{100}-\x{17f}]+$/ui', $parts[1] ) ){
         $action = $parts[1];
     }
     else{
