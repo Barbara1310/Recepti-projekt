@@ -70,8 +70,8 @@ foreach($recepti_za_prikaz as $recept){
     ?>
     <div class="prvidiv">
     <div class="tekst">
-      <img src="<?php  echo $recept->link; ?>" alt="slika" style="width:100%">
-      <h3><?php echo $recept->title; ?> </h3>
+      <a <?php echo 'href="recipes.php?rt=recipes/'.$recept->title.'"'; ?>><img src="<?php echo $recept->link; ?>" alt="slika" style="width:100%"></a>
+      <?php echo '<a class="nav-link" href="recipes.php?rt=recipes/'.$recept->title.'"><h3>'. $recept->title .'</h3></a>'; ?>
     </div>
   </div>
   <br><br>
