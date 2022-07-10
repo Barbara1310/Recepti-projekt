@@ -75,6 +75,13 @@ class UsersController{
         $_SESSION['username'] = $_POST['username']; //zelimo jos u session ubaciti i id korisnika
         $rs->setUserId( $username ); //ta fja nam vadi id korisnika iz baze i ubaci ga u session
         header('Location: recipes.php?rt=recipes/index'); //idi na recipesController i index fju
+
+
+        mail('rp.recepti@outlook.com', 'Registracija', "PROBA");
+
+        // slanje emaila
+
+
       }
       else{
         require_once __DIR__ . '/../view/register.php';
