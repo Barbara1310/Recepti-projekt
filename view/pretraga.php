@@ -3,55 +3,75 @@ require_once __DIR__ . '/_header.php';
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Pretraga recepata</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css" />
-  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-</head>
-<body> 
-
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/css/bootstrap-tokenfield.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/bootstrap-tokenfield.js"></script>
+    </head>
+    <body>
 <form class="form" method="post" action="recipes.php?rt=recipes/handleSearch">
-<div class="container">
-      <br>
+<div class="container" style="position:absolute; width: 300px;">
+    <br>
     <label>Kategorija:</label>
-    <input type="text" name="kategorija" id="kategorija" placeholder="Sastojak">
+    <input type="text" name="kategorija" id="kategorija" placeholder="Kategorija">
     <br>
     <label>Sastojak:</label>
-    <input type="text" name="sastojak" id="sastojak" placeholder="Kategorija">
+    <input type="text" name="sastojak" id="sastojak" placeholder="Sastojak">
     <br>
     <button type="submit" name="save" class="btn btn-primary">Traži</button>
 </div>    
 </form>
+    </body>
+</html>
 
-<script type="text/javascript">
-  $(function() {
-     $( "#kategorija" ).autocomplete({
-       source: '/model/categoriesAutocomplete.php',
-     });
+<script>
+  $(document).ready(function(){
+    $('#sastojak').tokenfield({
+        autocomplete :{
+            source: function(request, response)
+            {
+                jQuery.get('/../model/ingredientsAutocomplete.php', {
+                    term : request.term
+                }, function(data){
+                    data = JSON.parse(data);
+                    response(data);
+                });
+            },
+            delay: 100
+        }
+    });
+  });
+    $(document).ready(function(){
+    $('#kategorija').tokenfield({
+        autocomplete :{
+            source: function(request, response)
+            {
+                jQuery.get('/../model/categoriesAutocomplete.php', {
+                    term : request.term
+                }, function(data){
+                    data = JSON.parse(data);
+                    response(data);
+                });
+            },
+            delay: 100
+        }
+    });
   });
 </script>
-<script type="text/javascript">
-  $(function() {
-     $( "#sastojak" ).autocomplete({
-       source: '/model/ingredientsAutocomplete.php',
-     });
-  });
-</script>
 
 
-<?php 
-
-if(count($recepti_za_prikaz) > 0){
-for($i = 0; $i < count($recepti_za_prikaz); $i += 1){
-  $recept = $recepti_za_prikaz[$i]
+<?php
+if(!empty($recepti_za_prikaz)){
+foreach($recepti_za_prikaz as $recept){
     ?>
     <div class="prvidiv">
     <div class="tekst">
       <img src="<?php  echo $recept->link; ?>" alt="slika" style="width:100%">
-      <h3><?php echo $recepti_za_prikaz[$i]->title; ?> </h3>
+      <h3><?php echo $recept->title; ?> </h3>
     </div>
   </div>
   <br><br>
@@ -61,5 +81,3 @@ for($i = 0; $i < count($recepti_za_prikaz); $i += 1){
 }
 ?>
 
-</body>
-</html>

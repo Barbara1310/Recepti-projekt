@@ -58,12 +58,12 @@ class recipesController
 
     public function handleSearch(){
       $title='Pretraži recepte';
-      $sastojak = $_POST['sastojak'];
-      $kategorija = $_POST['kategorija'];
+      $sastojci = $_POST['sastojak'];
+      $kategorije = $_POST['kategorija'];
 
       $rs = new RecipesService();
-      $recepti_za_prikaz = $rs->findRecipes($sastojak, $kategorija);
-
+      $recepti_za_prikaz = $rs->findRecipes($sastojci, $kategorije);
+      
       require_once __DIR__ . '/../view/pretraga.php'; //
     }
 }

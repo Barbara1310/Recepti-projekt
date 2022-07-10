@@ -265,28 +265,40 @@ class RecipesService{
 
    public function findRecipes($ingredient, $category){
         $db = DB::getConnection();
+
+        // id kategorija
         $recipes_by_ingr = [];
-        $category_ids = [];
+        $category_ids = "";
         $recipes_in_category = [];
 
-        $st = $db->prepare( 'SELECT id_recipe FROM p_recipes_ingredients WHERE ingredient = :ingredient');
-        $st->bindParam(':ingredient', $ingredient);
+
+        $ingredients = explode(',', $ingredient);
+        $ingredients_str = "";
+        for($i = 0; $i < count($ingredients); $i += 1){
+            $ingredients_str = $ingredients_str . "'" . $ingredients[$i] . "', ";
+        }
+        $st = $db->prepare( 'SELECT id_recipe FROM p_recipes_ingredients WHERE ingredient IN (' . $ingredients_str . ' "")');
         $st->execute();
 
        while( $row = $st->fetch() ){
            array_push($recipes_by_ingr, $row['id_recipe']);
        }
 
-        $st = $db->prepare( 'SELECT id FROM p_categories WHERE name = :name');
-        $st->bindParam(':name', $category);
-        $st->execute();
-
-        while( $row = $st->fetch() ){
-            array_push($category_ids, $row['id']);
+        $categories = explode(',', $category);
+        $categories_str = "";
+        for($i = 0; $i < count($categories); $i += 1){
+            $categories_str = $categories_str . "'" . $categories[$i] . "', ";
         }
 
-        $st = $db->prepare( 'SELECT id_recipe FROM p_recipes_categories WHERE id_category = :id_category');
-        $st->bindParam(':id_category', $category_ids[0]);
+        $st = $db->prepare( 'SELECT id FROM p_categories WHERE name IN (' . $categories_str . '\'\')');
+        $st->execute();
+        while( $row = $st->fetch() ){
+            $category_ids = $category_ids . $row['id'] . ',';
+        }
+
+
+
+        $st = $db->prepare( 'SELECT id_recipe FROM p_recipes_categories WHERE id_category IN (' . $category_ids . '-1);');
         $st->execute();
 
         while( $row = $st->fetch() ){
@@ -295,16 +307,20 @@ class RecipesService{
 
         $recipes_id = [];
         for($i = 0; $i < count($recipes_by_ingr); $i += 1){
-            if(in_array($recipes_by_ingr[$i], $recipes_in_category)){
+            if(in_array($recipes_by_ingr[$i], $recipes_in_category) || count($recipes_in_category) == 0){
                 array_push($recipes_id, $recipes_by_ingr[$i]);
             }
+        }
+
+        if(count($recipes_by_ingr) == 0){
+            $recipes_id = $recipes_in_category;
         }
 
         $recipes=[];
         for($i=0;$i<count($recipes_id);$i++){
             $recipes[]=$this->getRecipeById($recipes_id[$i]);
         }
-        
+
             return $recipes;
         }
 
