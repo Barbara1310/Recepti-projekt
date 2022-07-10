@@ -16,7 +16,7 @@ else{
         $controller = 'users';
     }
 
-    if( isset($parts[1]) && preg_match( '/^[A-Za-z0-9]+$/', $parts[1] ) ){
+    if( isset($parts[1]) && preg_match( '/^[A-Za-z ,.-]+$/', $parts[1] ) ){
         $action = $parts[1];
     }
     else{
@@ -33,6 +33,22 @@ if( !file_exists(__DIR__ . '/controller/' . $controllerName . '.php')){
 }
 
 $con = new $controllerName();
+
+$rs = new RecipesService;
+if( $controller == 'recipes'){
+	$recipesList = $rs->getAllRecipes();
+	foreach( $recipesList as $recipes ){
+        /*echo $recipes->title . ' | ';
+        echo $action;
+        echo '<br>';*/
+		if( $recipes->title == $action ){
+            //echo 'akcija je dobra';
+			$con->recept($recipes->id);
+			exit(0);
+		}
+	}
+}
+
 //ako u klasi con ne postoji clanska fja action, baci error
 if( !method_exists( $con, $action ) ){
     error_404();

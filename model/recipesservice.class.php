@@ -3,6 +3,7 @@ session_start();
 require_once __DIR__ . '/../app/db.class.php';
 require_once __DIR__ . '/recipe.class.php';
 require_once __DIR__ . '/category.class.php';
+require_once __DIR__ . '/ingredient.class.php';
 
 class RecipesService{
 
@@ -323,6 +324,66 @@ class RecipesService{
 
             return $recipes;
         }
+
+
+  public function getRecipeCategories($id_recipe)
+  {
+    $categories_id = [];
+    $db = DB::getConnection();
+    $st = $db->prepare( 'SELECT id_category FROM p_recipes_categories WHERE id_recipe=:id_recipe' );
+    $st->execute(['id_recipe' => $id_recipe]);
+
+    while( $row = $st->fetch() ){
+      $categories_id[] =  $row['id_category'];
+    }
+
+    $categories = [];
+    $db = DB::getConnection();
+    $st = $db->prepare( 'SELECT id, name FROM p_categories WHERE id =:id' );
+    foreach( $categories_id as $id)
+    {
+      $st->execute(['id' => $id]);
+    }
+
+    while( $row = $st->fetch() ){
+      $categories[] = new Category( $row['id'], $row['name']);
+    }
+
+    return $categories;
+  }
+
+  public function getAllRecipes()
+	{
+		$arr = array();
+		try
+		{
+			$db = DB::getConnection();
+			$st = $db->prepare( 'SELECT * FROM p_recipes' );
+			$st->execute();
+		}
+		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+
+		while( $row = $st->fetch() )
+		{
+      $arr[] = new Recipe( $row['id'], $row['title'], $row['description'] , $row['link'], $row['duration'], $row['id_user']);
+		}
+
+		return $arr;
+	}
+
+  public function getRecipeIngridients($id_recipe)
+  {
+    $ingredients = [];
+    $db = DB::getConnection();
+    $st = $db->prepare( 'SELECT * FROM p_recipes_ingredients WHERE id_recipe=:id_recipe' );
+    $st->execute(['id_recipe' => $id_recipe]);
+
+    while( $row = $st->fetch() ){
+      $ingredients[] =  new Ingredient($row['id'], $row['id_recipe'], $row['amount'], $row['ingredient']) ;
+    }
+
+    return $ingredients;
+  }
 
 }
 
