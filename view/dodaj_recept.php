@@ -52,6 +52,7 @@
       <li class="nav-item"><a class="nav-link" href="recipes.php?rt=recipes/favoriti">Moji favoriti</a></li>
       <li class="nav-item"><a class="nav-link" href="recipes.php?rt=recipes/pretraga">Pretraži recepte</a></li>
 	  <li class="nav-item"><a class="nav-link" href="recipes.php?rt=recipes/dodaj">Dodaj novi recept</a></li>
+      <?php if($_SESSION['is_admin'] === '1') ?>  <li class="nav-item"><a class="nav-link" href="recipes.php?rt=categories/addCategory">Dodaj kategoriju</a></li>
     <li class="nav-item"><a class="nav-link" href="recipes.php?rt=users/logout">Odjavi se</a></li>
     </ul>
   </div>
@@ -88,21 +89,21 @@
 
             </div>
             <div class="col-md-4 mb-3">
-             <input type="text" name="naslov" placeholder="naslov"> 
+             <input type="text" name="naslov" placeholder="naslov">
               <input type="text" name="vrijeme" placeholder="vrijeme pripreme">
-              <input type="text" name="link" placeholder="link fotografije jela"> 
+              <input type="text" name="link" placeholder="link fotografije jela">
               <textarea name="opis" id="" cols="30" rows="10" placeholder="Ovdje opišite postupak"></textarea>
             </div>
             <p>Označite kojoj kategoriji jelo pripada: </p>
               <?php   //tu zapravo ispisujemo sve kategorije u obliku checkboxa kako bismo onda u bazu mogli pospremiti id tog recepta i njegove kategorije (moguće više kategorija)
-              
+
               for($i=0; $i<count($kategorije); $i++)
               {
                 ?>
                   <input type="checkbox" name="categories[]" value="<?php echo $kategorije[$i]->id ?>" id="<?php echo $kategorije[$i]->name ?>">
                    <label for="<?php echo $kategorije[$i]->name ?>"> <?php echo $kategorije[$i]->name ?> </label>
 
-               <?php 
+               <?php
               }
               ?>
             <div>
@@ -139,7 +140,7 @@
        let row_item = $(this).parent().parent();
        $(row_item).remove();
 
-     }); 
+     });
      //tu ćemo napisati ajax zahtjev kako bismo poslali te podatke od recepta i onda ih spremili u bazu
      $("#add_form").submit(function(e){
         e.preventDefault();
@@ -166,14 +167,3 @@
 </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
