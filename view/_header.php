@@ -17,8 +17,10 @@
 		color: red;
 	  }
     .column {
+  column-gap: 10px;
   float: left;
-  width: 25%;
+  width: 33.33%;
+  
 }
 .content {
   background-color: white;
