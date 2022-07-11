@@ -81,6 +81,12 @@ class recipesController
     $recept = $rs->getRecipeById($recept_id);
     $kategorijeRecepta = $rs->getRecipeCategories($recept_id);
     $sastojciRecepta = $rs->getRecipeIngridients($recept_id);
+    $popisKorisnika = $rs->getAllUsers();
+    $komentariRecepta = $rs->getRecipeComments($recept_id);
+    $prosjecnaOcjena = $rs->getAverageRating($recept_id);
+    $omiljeni = $rs->getMyFavourites();
+    echo $omiljeni;
+    //$nijeFavorit = $rs->getFavourite($recept_id, $_SESSION['id_user']);
     require_once __DIR__ . '/../view/prikazi_recept.php';
   }
 

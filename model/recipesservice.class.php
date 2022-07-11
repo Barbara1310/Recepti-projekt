@@ -4,6 +4,8 @@ require_once __DIR__ . '/../app/db.class.php';
 require_once __DIR__ . '/recipe.class.php';
 require_once __DIR__ . '/category.class.php';
 require_once __DIR__ . '/ingredient.class.php';
+require_once __DIR__ . '/comment.class.php';
+require_once __DIR__ . '/user.class.php';
 
 class RecipesService{
 
@@ -384,6 +386,66 @@ class RecipesService{
 
     return $ingredients;
   }
+
+  public function getRecipeComments($id_recipe)
+  {
+    $comments = [];
+    $db = DB::getConnection();
+    $st = $db->prepare( 'SELECT * FROM p_recipes_comments WHERE id_recipe=:id_recipe' );
+    $st->execute(['id_recipe' => $id_recipe]);
+
+    while( $row = $st->fetch() ){
+      $comments[] =  new Comment($row['id'], $row['id_recipe'], $row['id_user'], $row['comment']) ;
+    }
+
+    return $comments;
+  }
+
+  public function getAllUsers() 
+   {
+     $users = [];
+     try
+ 		 {
+ 			$db = DB::getConnection();
+ 			$st = $db->prepare( 'SELECT * FROM p_users' );
+ 			$st->execute();
+ 		 }
+ 		 catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+
+     while( $row = $st->fetch() ){
+           $users[] = new User( $row['id'], $row['username'], $row['password_hash'], $row['email'],
+            $row['has_registered'], $row['registration_sequence'], $row['is_admin'] );
+     }
+     return $users;
+
+   }
+
+   public function getAverageRating($id_recipe)
+   { 
+    $rates = [];
+     try
+ 		 {
+ 			$db = DB::getConnection();
+ 			$st = $db->prepare( 'SELECT rate FROM p_recipes_rates WHERE id_recipe=:id_recipe' );
+ 			$st->execute(['id_recipe' => $id_recipe]);
+ 		 }
+ 		 catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+
+     while( $row = $st->fetch() ){
+           $rates[] = $row['rate'];
+     }
+     $rateSum = 0;
+     $rateLength = count($rates);
+     foreach($rates as $r){
+      $rateSum += $r;
+     }
+     if($rateLength)
+      $avgRate = $rateSum/$rateLength;
+     else 
+      $avgRate = 'Nema ocjena:(';
+     return $avgRate;
+
+   }
 
 }
 
