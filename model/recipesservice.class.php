@@ -447,6 +447,29 @@ class RecipesService{
 
    }
 
+   public function addNewFavourite($id_recipe)
+   {
+      $db = DB::getConnection();
+      $st = $db->prepare( "INSERT INTO p_favourites (id, id_recipe, id_user)
+                              VALUES (NULL, :id_recipe, :id_user )" );
+
+
+      $st->bindParam(':id_recipe', $id_recipe);
+      $st->bindParam(':id_user', $_SESSION['id_user']);
+      $st->execute();
+   }
+
+   public function removeFavourite($id_recipe)
+   {
+    try
+     {
+      $db = DB::getConnection();
+      $st = $db->prepare( 'DELETE FROM p_favourites WHERE id_recipe=:id_recipe AND id_user=:id_user' );
+      $st->execute(['id_recipe' => $id_recipe, 'id_user' => $_SESSION['id_user'] ]);
+     }
+     catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+   }
+
 }
 
 ?>

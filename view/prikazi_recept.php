@@ -43,44 +43,7 @@
         <dt class="col-md-3">Prosječna ocjena:</dt>
         <dd class="col-md-9"><?php  echo $prosjecnaOcjena; ?></dd>
       </dl> 
-      <?php 
-        $nijeFavorit = true;
-        echo $omiljeni;
-        foreach($omiljeni as $om)
-        {
-           if($om->id_recipe == $recept->id)
-            $nijeFavorit = false;
-        }
-        if($nijeFavorit === true)
-        {
-          ?>
-          <button id="favorit"  style = "border: 1px solid #000000;/*black;*/
-        color:  #F9E3E3;/*lightsteelblue;*/
-        font-family: 'Goudy Old Style', Garamond, 'Big Caslon', 'Times New Roman';
-        background-image:
-        url(https://wallpapercave.com/wp/wp3114035.jpg);
-        width: 10vw;
-        height: 10vh;
-        font-size: 1.15rem;
-        text-align:center;
-        border-radius: 5vw;
-        margin-bottom: 1vw" >Dodaj u favorite.</button>
-        <?php
-        } 
-        else{ ?>
-          <button id="favorit"  style = "border: 1px solid #000000;/*black;*/
-        color:  #F9E3E3;/*lightsteelblue;*/
-        font-family: 'Goudy Old Style', Garamond, 'Big Caslon', 'Times New Roman';
-        background-image:
-        url(https://wallpapercave.com/wp/wp3114035.jpg);
-        width: 10vw;
-        height: 10vh;
-        font-size: 1.15rem;
-        text-align:center;
-        border-radius: 5vw;
-        margin-bottom: 1vw" >Dodano u favorite.</button>
-        <?php }
-        ?>
+      <?php require_once __DIR__ . '/dodaj_favorit.php'; ?>
     </div>
     </section>
     <div class="uvod" style="
@@ -123,13 +86,25 @@
 <script>
   $(document).ready(function()
   {
-    $('#favorit').on('click', dodaj_favorit());
+    $('#dodajFavorit').on('click', dodaj_favorit());
+    $('#ukloniFavorit').on('click', ukloni_favorit());
   });
 
-  function dodaj_favorit()
+  /*function dodaj_favorit()
   {
-    
-  }
+    $.ajax({
+           url: '../Recepti-projekt/controller/dodajFavorit.php',
+           method: 'post',
+           data: id: ,
+           success: function(response){
+             console.log(response);
+             //$("#add_category")[0].reset();
+             $(".append_item").remove();
+             $("#show_alert").html('<div class="alert alert-success" role="alert">Uspješno dodano</div>');
+           }
+
+         });
+  }*/
 
 </script>
 <?php require_once __DIR__ . '/_footer.php'; ?>
