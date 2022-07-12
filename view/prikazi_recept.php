@@ -39,7 +39,7 @@
         <dt class="col-md-3">Trajanje pripreme:</dt>
         <dd class="col-md-9"><?php  echo $recept->duration;?></dd>
         <dt class="col-md-3">Kategorije:</dt>
-        <dd class="col-md-9"><?php  foreach($kategorijeRecepta as $kat ){ echo $kat->name; } ?></dd>
+        <dd class="col-md-9"><?php  foreach($kategorijeRecepta as $kat ){ echo $kat->name . ' '; } ?></dd>
         <dt class="col-md-3">Prosječna ocjena:</dt>
         <dd class="col-md-9"><?php  echo $prosjecnaOcjena; ?></dd>
       </dl> 
@@ -64,6 +64,7 @@
         echo 'Recept nema recenzija!';
       }
       else{
+        echo '<ul class="list-unstyled">';
         foreach($komentariRecepta as $kom)
         {
           $author = 'Greška!';
@@ -73,11 +74,14 @@
               $author = $korisnik->username;
           }
           ?>
-          <div style = "border: 1px solid #000000;/*black;*/
+          <li class="media">
+          <div class="media-body" style = "border: 1px solid #000000;/*black;*/
           font-size: 1.15rem;">
-              <?php echo $author . ': ' .$kom->comment; ?>
-          </div>
-        <?php } 
+              <h5 class="mt-0"><?php echo $author; ?></h5>
+              <p><?php echo $kom->comment; ?></p>
+          </li>
+        <?php } ?>
+        </ul> <?php 
       }?>
     </section>
 </article>

@@ -345,10 +345,9 @@ class RecipesService{
     foreach( $categories_id as $id)
     {
       $st->execute(['id' => $id]);
-    }
-
-    while( $row = $st->fetch() ){
-      $categories[] = new Category( $row['id'], $row['name']);
+      while( $row = $st->fetch() ){
+        $categories[] = new Category( $row['id'], $row['name']);
+      }
     }
 
     return $categories;

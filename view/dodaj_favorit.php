@@ -2,10 +2,12 @@
 <?php 
     echo '<input type="hidden" name="id_recepta" value = "' . $recept->id . '">';
     $nijeFavorit = true;
-    foreach($omiljeni as $om)
-    {
-        if($om->id == $recept->id)
-        $nijeFavorit = false;
+    if( $omiljeni != [] ){
+        foreach($omiljeni as $om)
+        {
+            if($om->id == $recept->id)
+            $nijeFavorit = false;
+        }
     }
     if($nijeFavorit === true)
     {
