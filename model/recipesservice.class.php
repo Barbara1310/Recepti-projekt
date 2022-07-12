@@ -470,6 +470,19 @@ class RecipesService{
      catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
    }
 
+   public function addNewComment($id_recipe, $comment)
+   {
+      $db = DB::getConnection();
+      $st = $db->prepare( "INSERT INTO p_recipes_comments (id, id_recipe, id_user, comment)
+                              VALUES (NULL, :id_recipe, :id_user, :comment )" );
+
+
+      $st->bindParam(':id_recipe', $id_recipe);
+      $st->bindParam(':id_user', $_SESSION['id_user']);
+      $st->bindParam(':comment', $comment);
+      $st->execute();
+   }
+
 }
 
 ?>

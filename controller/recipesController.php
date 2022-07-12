@@ -91,7 +91,6 @@ class recipesController
 
   public function dodajFavorit(){
     $rs = new RecipesService();
-    $title = 'dodano u favorite';
     $recept_id = $_POST['id_recepta'];
     if( isset($_POST['dodajMojFavorit'])){
         $rs->addNewFavourite($recept_id);
@@ -113,7 +112,24 @@ class recipesController
     require_once __DIR__ . '/../view/prikazi_recept.php';
   }
 
+  public function dodajKomentar(){
+    $rs = new RecipesService();
+    $recept_id = $_POST['id_recepta'];
+    if( isset($_POST['komentiraj']) && isset($_POST['mojKomentar']) && $_POST['mojKomentar']!== ''){
+        $rs->addNewComment($recept_id, $_POST['mojKomentar']);
+    }
 
+    $title = ($rs->getRecipeById($recept_id))->title;
+
+    $recept = $rs->getRecipeById($recept_id);
+    $kategorijeRecepta = $rs->getRecipeCategories($recept_id);
+    $sastojciRecepta = $rs->getRecipeIngridients($recept_id);
+    $popisKorisnika = $rs->getAllUsers();
+    $komentariRecepta = $rs->getRecipeComments($recept_id);
+    $prosjecnaOcjena = $rs->getAverageRating($recept_id);
+    $omiljeni = $rs->getMyFavourites();
+    require_once __DIR__ . '/../view/prikazi_recept.php';
+  }
 
 }
 

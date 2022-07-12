@@ -57,9 +57,7 @@
     margin-top: 0vw;
     background-color: #F9E3E3;
     padding: 1.5vw;">
-      <label for="mojKomentar">Komentirajte jelo: </label>
-      <input type="text" id="mojKomentar">
-      <button id="komentiraj">Komentiraj!</button>
+      <?php require_once __DIR__ . '/dodaj_komentar.php'; ?>
 
       <?php
       if( $komentariRecepta == [] ){
@@ -83,28 +81,5 @@
       }?>
     </section>
 </article>
-<script>
-  $(document).ready(function()
-  {
-    $('#dodajFavorit').on('click', dodaj_favorit());
-    $('#ukloniFavorit').on('click', ukloni_favorit());
-  });
 
-  /*function dodaj_favorit()
-  {
-    $.ajax({
-           url: '../Recepti-projekt/controller/dodajFavorit.php',
-           method: 'post',
-           data: id: ,
-           success: function(response){
-             console.log(response);
-             //$("#add_category")[0].reset();
-             $(".append_item").remove();
-             $("#show_alert").html('<div class="alert alert-success" role="alert">Uspješno dodano</div>');
-           }
-
-         });
-  }*/
-
-</script>
 <?php require_once __DIR__ . '/_footer.php'; ?>
