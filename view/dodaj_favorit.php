@@ -12,13 +12,13 @@
     if($nijeFavorit === true)
     {
     ?>
-        <button id="dodajFavorit" name="dodajMojFavorit" type="submit"  style = "border: 1px solid #000000;/*black;*/
+        <button id="dodajFavorit" name="dodajMojFavorit" type="submit"  style = "align:center; border: 1px solid #000000;/*black;*/
         color:  #F9E3E3;/*lightsteelblue;*/
         font-family: 'Goudy Old Style', Garamond, 'Big Caslon', 'Times New Roman';
         background-image:
         url(https://wallpapercave.com/wp/wp3114035.jpg);
-        width: 10vw;
-        height: 10vh;
+        width: 9vw;
+        height: 5vh;
         font-size: 1.15rem;
         text-align:center;
         border-radius: 5vw;
@@ -26,13 +26,13 @@
         <?php
         } 
     else{ ?>
-          <button id="makniFavorit" name="makniMojFavorit" type="submit" style = "border: 1px solid #000000;/*black;*/
+          <button id="makniFavorit" name="makniMojFavorit" type="submit" style = " align:center; border: 1px solid #000000;/*black;*/
         color:  #F9E3E3;/*lightsteelblue;*/
         font-family: 'Goudy Old Style', Garamond, 'Big Caslon', 'Times New Roman';
         background-image:
         url(https://wallpapercave.com/wp/wp3114035.jpg);
-        width: 10vw;
-        height: 10vh;
+        width: 9vw;
+        height: 5vh;
         font-size: 1.15rem;
         text-align:center;
         border-radius: 5vw;

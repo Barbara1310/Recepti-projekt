@@ -482,6 +482,23 @@ class RecipesService{
       $st->execute();
    }
 
+   public function getMyRating($id_recipe){
+    $rating = [];
+     try
+ 		 {
+ 			$db = DB::getConnection();
+ 			$st = $db->prepare( 'SELECT rate FROM p_recipes_rates WHERE id_recipe=:id_recipe AND id_user=:id_user' );
+ 			$st->execute(['id_recipe' => $id_recipe, 'id_user'=>$_SESSION['id_user']]);
+ 		 }
+ 		 catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+
+     while( $row = $st->fetch() ){
+           $rating = $row['rate'];
+     }
+     
+     return $rating;
+   }
+
 }
 
 ?>

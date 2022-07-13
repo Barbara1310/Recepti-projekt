@@ -40,6 +40,21 @@
         <dd class="col-md-9"><?php  echo $recept->duration;?></dd>
         <dt class="col-md-3">Kategorije:</dt>
         <dd class="col-md-9"><?php  foreach($kategorijeRecepta as $kat ){ echo $kat->name . ' '; } ?></dd>
+       <!-- <dt class="col-md-3"></dt>
+        <dd class="col-md-9">
+          <div class = "rate">
+            <input type="radio" name="rating" id="star5" value = "5" <?php echo $prosjecnaOcjena >= 5 ?'checked="checked"':'';?>>
+            <label for="star5"></label>
+            <input type="radio" name="rating" id="star4" value = "4" <?php echo $prosjecnaOcjena >= 4 ?'checked="checked"':'';?>>
+            <label for="star4"></label>
+            <input type="radio" name="rating" id="star3" value = "3" <?php echo $prosjecnaOcjena >= 3 ?'checked="checked"':'';?>>
+            <label for="star3"></label>
+            <input type="radio" name="rating" id="star2" value = "2" <?php echo $prosjecnaOcjena >= 2 ?'checked="checked"':'';?>>
+            <label for="star2"></label>
+            <input type="radio" name="rating" id="star1" value = "1" <?php echo $prosjecnaOcjena >= 1 ?'checked="checked"':'';?>>
+            <label for="star1"></label>
+          </div>
+        </dd>-->
         <dt class="col-md-3">Prosječna ocjena:</dt>
         <dd class="col-md-9"><?php  echo $prosjecnaOcjena; ?></dd>
       </dl> 
@@ -58,6 +73,7 @@
     background-color: #F9E3E3;
     padding: 1.5vw;">
       <?php require_once __DIR__ . '/dodaj_komentar.php'; ?>
+      <?php //require_once __DIR__ . '/dodaj_ocjenu.php'; ?>
 
       <?php
       if( $komentariRecepta == [] ){
@@ -74,10 +90,13 @@
               $author = $korisnik->username;
           }
           ?>
-          <li class="media">
-          <div class="media-body" style = "border: 1px solid #000000;/*black;*/
-          font-size: 1.15rem;">
-              <h5 class="mt-0"><?php echo $author; ?></h5>
+          <li class="media" style = "padding: 0.3vw; margin: 0.6vw; border: 1px solid #000000;background-color: #FEF3F3;">
+          <img src="https://cdn1.vectorstock.com/i/thumb-large/80/75/logo-design-element-chef-restaurant-cook-vector-4878075.jpg" 
+          class="mr-3" alt="kuhar" style = "border: 1px solid #000000; width: 4vw;" >
+          <!--<img src="https://cdn3.vectorstock.com/i/thumb-large/63/62/cafe-restaurant-logo-diner-or-cook-chef-vector-8516362.jpg" 
+          class="mr-3" alt="kuhar" style = " width: 4vw;" > -->
+          <div class="media-body" style = "font-size: 1.15rem;">
+              <h4 class="mt-0" style = "font-size: 1.2rem; font-weight: bold;"><?php echo $author; ?></h4>
               <p><?php echo $kom->comment; ?></p>
           </li>
         <?php } ?>

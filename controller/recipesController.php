@@ -128,6 +128,7 @@ class recipesController
     $komentariRecepta = $rs->getRecipeComments($recept_id);
     $prosjecnaOcjena = $rs->getAverageRating($recept_id);
     $omiljeni = $rs->getMyFavourites();
+    $ocjena = $rs->getMyRating($recept_id);
     require_once __DIR__ . '/../view/prikazi_recept.php';
   }
 
