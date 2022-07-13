@@ -13,7 +13,7 @@
     background-color: #F9E3E3;
     padding: 1.5vw;">
       <picture>
-        <img src="<?php  echo $recept->link;?>" style =" width: 30vw;
+        <img src="<?php  echo $recept->link;?>" style =" width: 35vw;
         padding-right: 3vw; align:center; float: left" alt="slika">
       </picture>
       <!--<div class="display-4">
@@ -57,9 +57,10 @@
         </dd>-->
         <dt class="col-md-3">Prosječna ocjena:</dt>
         <dd class="col-md-9"><?php  echo $prosjecnaOcjena; ?></dd>
+        <dt class="col-md-3"></dt>
+        <dd class="col-md-9"><?php require_once __DIR__ . '/dodaj_favorit.php'; ?></dd>
       </dl> 
-      <?php require_once __DIR__ . '/dodaj_favorit.php'; ?>
-    </div>
+    <!--</div>
     </section>
     <div class="uvod" style="
     border: 1px solid #000000;/*black;*/
@@ -70,7 +71,7 @@
     margin-right: 7vw;
     margin-top: 0vw;
     background-color: #F9E3E3;
-    padding: 1.5vw;">
+    padding: 1.5vw;"> -->
       <?php require_once __DIR__ . '/dodaj_komentar.php'; ?>
       <?php //require_once __DIR__ . '/dodaj_ocjenu.php'; ?>
 
@@ -101,20 +102,13 @@
         <?php } ?>
         </ul> <?php 
       }?>
-    </section>
-</article>
 <div class="uvod" style="
-    border: 1px solid #000000;/*black;*/
     font-size: 1.15rem;
-    position:relative;
-    top:0;
-    width:78vw;
-    margin-left: 7vw;
-    margin-right: 7vw;
-    margin-bottom: 20vw;
-    margin-top: 0vw;
+    margin: 0.6vw;
+    margin-left: 0vw;
     background-color: #F9E3E3;
-    padding: 1.5vw;">
+    padding: 1.5vw;
+    padding-left: 0vw">
   <h5>Korisnicima kojima se svidio ovaj recept, svidio se i recept ... </h5>
 
 
@@ -124,8 +118,8 @@
       <?php echo '<a class="nav-link" href="recipes.php?rt=recipes/'.$prijedlog_recepta->title.'"><h3>'. $prijedlog_recepta->title .'</h3></a>'; ?>
     </div>
   </div>
-  <br><br>
-
-</div>
+  </div>
+  </section>
+</article>
 
 <?php require_once __DIR__ . '/_footer.php'; ?>
