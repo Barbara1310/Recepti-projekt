@@ -80,6 +80,7 @@ class recipesController
     $prosjecnaOcjena = $rs->getAverageRating($recept_id);
     $omiljeni = $rs->getMyFavourites();
     $prijedlog_recepta = $rs->getRecommendations($recept_id);
+    $ocjena = $rs->getMyRating($recept_id);
     //$nijeFavorit = $rs->getFavourite($recept_id, $_SESSION['id_user']);
     require_once __DIR__ . '/../view/prikazi_recept.php';
   }
@@ -105,6 +106,7 @@ class recipesController
     $prosjecnaOcjena = $rs->getAverageRating($recept_id);
     $omiljeni = $rs->getMyFavourites();
     $prijedlog_recepta = $rs->getRecommendations($recept_id);
+    $ocjena = $rs->getMyRating($recept_id);
     require_once __DIR__ . '/../view/prikazi_recept.php';
   }
 
