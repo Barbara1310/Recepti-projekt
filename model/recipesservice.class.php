@@ -566,6 +566,19 @@ class RecipesService{
      return $rating;
    }
 
+   public function addNewRating($id_recipe, $mojaOcjena){
+      $db = DB::getConnection();
+      $st = $db->prepare( "INSERT INTO p_recipes_rates (id, id_recipe, id_user, rate)
+                              VALUES (NULL, :id_recipe, :id_user, :rate )" );
+
+
+      $st->bindParam(':id_recipe', $id_recipe);
+      $st->bindParam(':id_user', $_SESSION['id_user']);
+      $st->bindParam(':rate', $mojaOcjena);
+      $st->execute();
+   }
+
+
 }
 
 ?>

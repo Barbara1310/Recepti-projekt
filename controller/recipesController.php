@@ -131,6 +131,27 @@ class recipesController
     require_once __DIR__ . '/../view/prikazi_recept.php';
   }
 
+  public function dodajOcjenu(){
+    $rs = new RecipesService();
+    $recept_id = $_POST['id_recepta'];
+    if( isset($_POST['ocjeni']) && isset($_POST['mojaOcejna']) && $_POST['mojaOcejna']!== ''){
+        $rs->addNewRating($recept_id, isset($_POST['mojaOcejna']));
+    }
+
+    $title = ($rs->getRecipeById($recept_id))->title;
+
+    $recept = $rs->getRecipeById($recept_id);
+    $kategorijeRecepta = $rs->getRecipeCategories($recept_id);
+    $sastojciRecepta = $rs->getRecipeIngridients($recept_id);
+    $popisKorisnika = $rs->getAllUsers();
+    $komentariRecepta = $rs->getRecipeComments($recept_id);
+    $prosjecnaOcjena = $rs->getAverageRating($recept_id);
+    $omiljeni = $rs->getMyFavourites();
+    $prijedlog_recepta = $rs->getRecommendations($recept_id);
+    $ocjena = $_POST['mojaOcejna']; //$rs->getMyRating($recept_id);
+    require_once __DIR__ . '/../view/prikazi_recept.php';
+  }
+
 }
 
  ?>

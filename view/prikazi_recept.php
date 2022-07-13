@@ -39,40 +39,19 @@
         <dt class="col-md-3">Trajanje pripreme:</dt>
         <dd class="col-md-9"><?php  echo $recept->duration;?></dd>
         <dt class="col-md-3">Kategorije:</dt>
-        <dd class="col-md-9"><?php  foreach($kategorijeRecepta as $kat ){ echo '<button class="gubmic">' . $kat->name . '</button> '; } ?></dd>
-        <!--<dt class="col-md-3"></dt>
-        <dd class="col-md-9">
-          <div class = "rate">
-            <span name="rating" id="star5" value = "5" class="fa fa-star <?php //if($prosjecnaOcjena >= 5){echo 'checked="checked"';}?>"></span>
-            <label for="star5"></label>
-            <span name="rating" id="star4" value = "4" class="fa fa-star <?php //if($prosjecnaOcjena >= 4){echo 'checked="checked"';}?>"></span>
-            <label for="star4"></label>
-            <span class="fa fa-star" name="rating" id="star3" value = "3" <?php //echo $prosjecnaOcjena >= 3 ?'checked':'';?>></span>
-            <label for="star3"></label>
-            <span class="fa fa-star" name="rating" id="star2" value = "2" <?php //echo $prosjecnaOcjena >= 2 ?'checked="checked"':'';?>></span>
-            <label for="star2"></label>
-            <span class="fa fa-star" name="rating" id="star1" value = "1" <?php //echo $prosjecnaOcjena >= 1 ?'checked="checked"':'';?>></span>
-            <label for="star1"></label>
-          </div>
+        <dd class="col-md-9"><?php  foreach($kategorijeRecepta as $kat ){ echo '<button class="zadanaKategorija" class="gubmic">' . $kat->name . '</button> '; } ?></dd>
+        <!--<dt class="col-md-3">Prosječna ocjena:</dt>
+        <dd class="col-md-9"><?php/*
+        for($i = 1; $i <= $prosjecnaOcjena; $i++)
+        {
+            echo '<span class="mojaZvijezdica" checked>★</span>';
+        }
+        for($i = $prosjecnaOcjena + 1; $i < 6; $i++)
+            echo '<span class="mojaZvijezdica">☆</span>';*/
+        ?>
         </dd>-->
         <dt class="col-md-3">Prosječna ocjena:</dt>
-        <dd class="col-md-9">
-          <?php  echo $prosjecnaOcjena; ?>
-          <div class = "star-rat">
-            <input disabled type="radio" name="rating" id="1" value = "1" <?php if($prosjecnaOcjena >= 1){echo 'checked';}?>>
-            <label for="1"></label>
-            <input disabled type="radio" name="rating" id="2" value = "2" <?php if($prosjecnaOcjena >= 2){echo 'checked';}?>>
-            <label for="2"></label>
-            <input disabled type="radio" name="rating" id="3" value = "3" <?php if($prosjecnaOcjena >= 3){echo 'checked ="checked"';}?>>
-            <label for="3"></label>
-            <input disabled type="radio" name="rating" id="4" value = "4" <?php if($prosjecnaOcjena >= 4){echo 'checked';}?>>
-            <label for="4"></label>
-            <input disabled type="radio" name="rating" id="5" value = "5" <?php if($prosjecnaOcjena >= 5){echo 'checked';}?>>
-            <label for="5"></label>
-          </div>
-        </dd>
-        <!--<dt class="col-md-3">Prosječna ocjena:</dt>
-        <dd class="col-md-9"><?php  //echo $prosjecnaOcjena; ?></dd>-->
+        <dd class="col-md-9"><?php  if($prosjecnaOcjena != 'Nema ocjena:(') echo '<p id="pro">' . round($prosjecnaOcjena, 2).'</p>'; else echo '<p id="pro">' . $prosjecnaOcjena .'</p>';?></dd>
         <dt class="col-md-3"></dt>
         <dd class="col-md-9"><?php require_once __DIR__ . '/dodaj_favorit.php'; ?></dd>
       </dl>
