@@ -15,11 +15,10 @@
          <br>
         <input type="password" placeholder="Re-enter Password" name="re-password" required>
         <br>
-        <input type="password" placeholder="Enter email" name="email" required>
+        <input type="text" placeholder="Enter email" name="email" required>
         <br>
         <button type="submit" name="button">Registracija</button>
       </div>
     </form>
-
   </body>
 </html>

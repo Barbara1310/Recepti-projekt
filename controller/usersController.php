@@ -27,8 +27,9 @@ class UsersController{
       }
       else {
         require_once __DIR__ . '/../view/login.php';
-        echo '<br>';
-        echo '<span style = "font-family: Verdana, Geneva, sans-serif; color: #00008B;">' . 'Unesite ispravne podatke za prijavu.' . '</span>';       
+        echo '<script language="javascript">';
+        echo 'alert("Unesite ispravne podatke")';
+        echo '</script>';     
       }
 
     }
@@ -48,51 +49,60 @@ class UsersController{
       
       // podudaraju li se passwordi?
       if($re_password != $password){
-        require_once __DIR__ . '/../view/register.php';
-        echo '<br>';
-        echo '<span style = "font-family: Verdana, Geneva, sans-serif; color: #00008B;">' . 'Passwordi se ne podudaraju.' . '</span>';       
+        require_once __DIR__ . '/../view/login.php';
+        echo '<script language="javascript">';
+        echo 'alert("Passwordi se ne podudaraju")';
+        echo '</script>';
+
         return;
       }
 
       // je li username jedinstven?
       if($rs->isUsernameInBase($username)){
-        require_once __DIR__ . '/../view/register.php';
-        echo '<br>';
-        echo '<span style = "font-family: Verdana, Geneva, sans-serif; color: #00008B;">' . 'Username je zauzet.' . '</span>';       
+        require_once __DIR__ . '/../view/login.php';
+        echo '<script language="javascript">';
+        echo 'alert("Username zauzet")';
+        echo '</script>';        
         return;
       } 
 
       // je li email jedinstven?
       if($rs->isEmailInBase($email)){
-        require_once __DIR__ . '/../view/register.php';
-        echo '<br>';
-        echo '<span style = "font-family: Verdana, Geneva, sans-serif; color: #00008B;">' . 'Email je vec registriran.' . '</span>';       
-        return;
+        require_once __DIR__ . '/../view/login.php';
+        echo '<script language="javascript">';
+        echo 'alert("Email je vec registriran")';
+        echo '</script>';
+                return;
       }
 
-      if($rs->insertUserToBase($username, $password, $email)) //provjera je li dodavanje korisnika uspjesno, ako je, dodaje u session
+      $activation_code = rand(3000, 8000);
+      if($rs->insertUserToBase($username, $password, $email, $activation_code)) //provjera je li dodavanje korisnika uspjesno, ako je, dodaje u session
       {
         $_SESSION['username'] = $_POST['username']; //zelimo jos u session ubaciti i id korisnika
         $rs->setUserId( $username ); //ta fja nam vadi id korisnika iz baze i ubaci ga u session
+        
+        $activation_link = "https://rp2.studenti.math.hr/~margegi/Recepti-projekt/model/verification.php/?email=". $email . "&activation_code=" . $activation_code;
+        echo '<script language="javascript">';
+        echo 'alert(".' . $activation_link . '")';
+        echo '</script>';
+        echo "link koji saljemo je " . $activation_link;
+        
+        mail('rp.recepti@outlook.com', 'Verifikacija', "Kliknite na link: " . $activation_link);
         header('Location: recipes.php?rt=recipes/index'); //idi na recipesController i index fju
-
-
-        mail('rp.recepti@outlook.com', 'Registracija', "PROBA");
-
-        // slanje emaila
-
-
+        
       }
       else{
-        require_once __DIR__ . '/../view/register.php';
-        echo '<br>';
-        echo '<span style = "font-family: Verdana, Geneva, sans-serif; color: #00008B;">' . 'Dogodila se greska.' . '</span>';       
+        require_once __DIR__ . '/../view/login.php';
+        echo '<script language="javascript">';
+        echo 'alert("Greska")';
+        echo '</script>';
         return;
       }
 
     }
 
   }
+
 
 
   public function logout(){ //odjava, unisti sesiju i vrati na login

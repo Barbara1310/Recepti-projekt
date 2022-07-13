@@ -35,18 +35,15 @@ class recipesController
       $recepti = $rs->getMyFavourites();
 
       require_once __DIR__ . '/../view/moji_recepti.php'; //isti je view kao i za moje recepte pa možemo koristiti taj ponovno
-
-
-
     }
 
   public function pretraga() //ovdje će se pretraživati svi recepti
     {
       $title='Pretraži recepte';
       $rs = new RecipesService();
-      $kategorije = [];
-      $kategorije = $rs->getAllCategories();
       $recepti_za_prikaz = [];
+      $sastojci = "";
+      $kategorije = "";
       require_once __DIR__ . '/../view/pretraga.php'; //
 
     }
@@ -57,10 +54,7 @@ class recipesController
       $rs = new RecipesService();
       $kategorije = [];
       $kategorije = $rs->getAllCategories();
-      require_once __DIR__ . '/../view/dodaj_recept.php'; //
-
-
-
+      require_once __DIR__ . '/../view/dodaj_recept.php'; 
     }
 
     public function handleSearch(){
@@ -70,7 +64,7 @@ class recipesController
 
       $rs = new RecipesService();
       $recepti_za_prikaz = $rs->findRecipes($sastojci, $kategorije);
-      
+
       require_once __DIR__ . '/../view/pretraga.php'; //
     }
 
@@ -85,6 +79,7 @@ class recipesController
     $komentariRecepta = $rs->getRecipeComments($recept_id);
     $prosjecnaOcjena = $rs->getAverageRating($recept_id);
     $omiljeni = $rs->getMyFavourites();
+    $prijedlog_recepta = $rs->getRecommendations($recept_id);
     //$nijeFavorit = $rs->getFavourite($recept_id, $_SESSION['id_user']);
     require_once __DIR__ . '/../view/prikazi_recept.php';
   }
@@ -109,6 +104,7 @@ class recipesController
     $komentariRecepta = $rs->getRecipeComments($recept_id);
     $prosjecnaOcjena = $rs->getAverageRating($recept_id);
     $omiljeni = $rs->getMyFavourites();
+    $prijedlog_recepta = $rs->getRecommendations($recept_id);
     require_once __DIR__ . '/../view/prikazi_recept.php';
   }
 
@@ -128,6 +124,7 @@ class recipesController
     $komentariRecepta = $rs->getRecipeComments($recept_id);
     $prosjecnaOcjena = $rs->getAverageRating($recept_id);
     $omiljeni = $rs->getMyFavourites();
+    $prijedlog_recepta = $rs->getRecommendations($recept_id);
     $ocjena = $rs->getMyRating($recept_id);
     require_once __DIR__ . '/../view/prikazi_recept.php';
   }

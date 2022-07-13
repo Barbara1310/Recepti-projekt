@@ -13,58 +13,72 @@ require_once __DIR__ . '/_header.php';
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/bootstrap-tokenfield.js"></script>
     </head>
     <body>
-<form class="form" method="post" action="recipes.php?rt=recipes/handleSearch">
+        <div class = "container">
+
+<form class="form" id = "pretraga" method="post" action="recipes.php?rt=recipes/handleSearch">
 <div class="container" style="position:absolute; width: 300px;">
     <br>
     <label>Kategorija:</label>
-    <input type="text" name="kategorija" id="kategorija" placeholder="Kategorija">
+    <input type="text" name="kategorija" id="kategorija" placeholder="">
     <br>
     <label>Sastojak:</label>
-    <input type="text" name="sastojak" id="sastojak" placeholder="Sastojak">
+    <input type="text" name="sastojak" id="sastojak" placeholder="">
     <br>
-    <button type="submit" name="save" class="btn btn-primary">Traži</button>
+    <button type="submit" name="save" class="btn btn-primary" style="width: 100%" id = "trazi">Traži</button>
+    <br><br>
 </div>    
 </form>
-    </body>
+</div>
+</body>
 </html>
 
 <script>
-  $(document).ready(function(){
+
+
+$(document).ready(function(){    
     $('#sastojak').tokenfield({
-        autocomplete :{
+        autocomplete : {
             source: function(request, response)
             {
-                jQuery.get('/../model/ingredientsAutocomplete.php', {
-                    term : request.term
-                }, function(data){
-                    data = JSON.parse(data);
-                    response(data);
+                $.ajax({
+                    url: '../Recepti-projekt//model/ingredientsAutocomplete.php',
+                    dataType: "json",
+                    data: {
+                        term: request.term
+                    },
+                    success: function(result) { response(result); }
                 });
-            },
-            delay: 100
+            }        
         }
     });
-  });
-    $(document).ready(function(){
+
     $('#kategorija').tokenfield({
-        autocomplete :{
+        autocomplete: {
             source: function(request, response)
             {
-                jQuery.get('/../model/categoriesAutocomplete.php', {
-                    term : request.term
-                }, function(data){
-                    data = JSON.parse(data);
-                    response(data);
+                $.ajax({
+                    url: '../Recepti-projekt/model/categoriesAutocomplete.php',
+                    dataType: "json",
+                    data: {
+                        term: request.term
+                    },
+                    success: function(result) { response(result); }
                 });
-            },
-            delay: 100
-        }
+            }
+        }       
     });
   });
 </script>
 
 
+<script type="text/javascript">
+  document.getElementById('sastojak').value = "<?php echo $sastojci;?>";
+  document.getElementById('kategorija').value = "<?php echo $kategorije;?>";
+</script>
+
+
 <?php
+
 if(!empty($recepti_za_prikaz)){
 foreach($recepti_za_prikaz as $recept){
     ?>

@@ -31,7 +31,6 @@ class RecipesService{
     }
    }
 
-
   // funkcija koja provjerava postoji li neki username u bazi
   public function isUsernameInBase( $username )
   {
@@ -68,20 +67,46 @@ class RecipesService{
     }
    }
 
-// funkcija koja dodaje novog korisnika u bazu
-  public function insertUserToBase( $username, $password, $email )
+  public function check_valid_verification( $code, $email )
   {
     $db = DB::getConnection();
 
     try{
-       $st = $db->prepare('INSERT INTO p_users(username, password_hash, email, has_registered, registration_sequence, is_admin) VALUES (:username, :password, :email, \'1\', \'abc\', \'0\')');
-           $st->execute(array('username' => $username, 'password' => password_hash($password, PASSWORD_DEFAULT), 'email' => $email));
+       $st = $db->prepare( 'SELECT email FROM p_users WHERE email=:email AND registration_sequence = :code' );
+       $st->execute( ['email' => $email, 'code' => $code] );
+   }catch( PDOException $e ){echo $e->getMessage();}
+   $row = $st->fetch();
+   if( $row === false ){
+       return false;
+   }
+   else{
+        return true;
+    }
+   }
+
+     public function activate_user( $email )
+  {
+    $db = DB::getConnection();
+
+    try{
+       $st = $db->prepare( 'UPDATE p_users SET has_registered = 1 WHERE email = :email' );
+       $st->execute( ['email' => $email] );
+   }catch( PDOException $e ){echo $e->getMessage();}
+   
+   }
+
+// funkcija koja dodaje novog korisnika u bazu
+  public function insertUserToBase($username, $password, $email, $activation_code)
+  {
+    $db = DB::getConnection();
+
+    try{
+       $st = $db->prepare('INSERT INTO p_users(username, password_hash, email, has_registered, registration_sequence, is_admin) VALUES (:username, :password, :email, \'1\', :registration_sequence, \'0\')');
+           $st->execute(array('username' => $username, 'password' => password_hash($password, PASSWORD_DEFAULT), 'email' => $email, 'registration_sequence' => $activation_code));
 
    }catch( PDOException $e ){echo $e->getMessage();}
    $row = $st->rowCount();
    if( $row === 0 ){
-        echo 'greskaaaa ';
-        echo $username . ' ' . $password . ' ' . $email;
        return false;
    }
    else{
@@ -108,8 +133,6 @@ class RecipesService{
     {
         $db = DB::getConnection();
         $st = $db->prepare( 'SELECT DISTINCT id_category FROM p_categories' );
-
-
     }
 
     public function getTodayRecipes() //vraća polje koje sadrži id-jeve današnjih recepata
@@ -269,43 +292,53 @@ class RecipesService{
    public function findRecipes($ingredient, $category){
         $db = DB::getConnection();
 
+
         // id kategorija
         $recipes_by_ingr = [];
         $category_ids = "";
         $recipes_in_category = [];
 
 
-        $ingredients = explode(',', $ingredient);
+        $ingredients = explode(', ', $ingredient);
         $ingredients_str = "";
         for($i = 0; $i < count($ingredients); $i += 1){
-            $ingredients_str = $ingredients_str . "'" . $ingredients[$i] . "', ";
+            if($i == 0) $ingredients_str = "'" . $ingredients[$i] . "'";
+            $ingredients_str = $ingredients_str . ",'" . $ingredients[$i] . "'";
         }
-        $st = $db->prepare( 'SELECT id_recipe FROM p_recipes_ingredients WHERE ingredient IN (' . $ingredients_str . ' "")');
-        $st->execute();
 
-       while( $row = $st->fetch() ){
-           array_push($recipes_by_ingr, $row['id_recipe']);
-       }
+        if($ingredients_str != ""){
+            $st = $db->prepare( 'SELECT id_recipe FROM p_recipes_ingredients WHERE ingredient IN (' . $ingredients_str . ')');
+            $st->execute();
 
-        $categories = explode(',', $category);
+            while( $row = $st->fetch() ){
+               array_push($recipes_by_ingr, $row['id_recipe']);
+            }
+        }
+
+
+        $categories = explode(', ', $category);
         $categories_str = "";
         for($i = 0; $i < count($categories); $i += 1){
-            $categories_str = $categories_str . "'" . $categories[$i] . "', ";
-        }
+            if($i == 0) $categories_str = "'" . $categories[$i] . "'";
+            else $categories_str = $categories_str . ",'" . $categories[$i] . "'";
 
-        $st = $db->prepare( 'SELECT id FROM p_categories WHERE name IN (' . $categories_str . '\'\')');
+        }
+        $q = 'SELECT id FROM p_categories WHERE name IN (' . $categories_str . ')';
+        
+        $st = $db->prepare( 'SELECT id FROM p_categories WHERE name IN (' . $categories_str . ')');
         $st->execute();
         while( $row = $st->fetch() ){
-            $category_ids = $category_ids . $row['id'] . ',';
+            if($category_ids == "") $category_ids = $row['id'];
+            else $category_ids = $category_ids . "," . $row['id'];
         }
-
-
-
-        $st = $db->prepare( 'SELECT id_recipe FROM p_recipes_categories WHERE id_category IN (' . $category_ids . '-1);');
-        $st->execute();
-
-        while( $row = $st->fetch() ){
-            array_push($recipes_in_category, $row['id_recipe']);
+       
+        if($category_ids != ""){
+            $st = $db->prepare( 'SELECT id_recipe FROM p_recipes_categories WHERE id_category IN (' . $category_ids . ');');
+            $st->execute();
+            
+            while( $row = $st->fetch() ){
+                array_push($recipes_in_category, $row['id_recipe']);
+            }
         }
 
         $recipes_id = [];
@@ -480,6 +513,40 @@ class RecipesService{
       $st->bindParam(':id_user', $_SESSION['id_user']);
       $st->bindParam(':comment', $comment);
       $st->execute();
+   }
+
+   public function getRecommendations($id_recipe){
+        $db = DB::getConnection();
+        $st = $db->prepare( 'SELECT id_user FROM p_favourites WHERE id_recipe=:id_recipe GROUP BY id_user' );
+        $st->execute(['id_recipe' => $id_recipe]);
+
+        $id_recommendation = -1;
+        $users = "";
+        while( $row = $st->fetch() ){
+            if($users == "") $users = $users . $row['id_user'];
+            else $users = $users . ',' . $row['id_user'];
+        }
+        if($users != ""){
+            $st = $db->prepare( 'SELECT id_recipe FROM p_favourites WHERE (id_user IN (' . $users . ') AND id_recipe <> :id_recipe) GROUP BY id_recipe ORDER BY count(*) DESC LIMIT 1' );
+            $st->execute(['id_recipe' => $id_recipe]);
+
+            while( $row = $st->fetch() ){
+                $id_recommendation = $row['id_recipe'];
+            }
+        }
+        if($id_recommendation > -1){
+            return $this->getRecipeById($id_recommendation);
+        }
+        else{
+            $st = $db->prepare( 'SELECT AVG(rate) as avgrate, id_recipe FROM p_recipes_rates WHERE id_recipe <> :id_recipe GROUP BY id_recipe ORDER BY avgrate DESC LIMIT 1' );
+            $st->execute(['id_recipe' => $id_recipe]);
+
+        $id_recommendation = -1;
+        while( $row = $st->fetch() ){
+            $id_recommendation = $row['id_recipe'];
+        }
+        return $this->getRecipeById($id_recommendation);
+        }
    }
 
    public function getMyRating($id_recipe){
