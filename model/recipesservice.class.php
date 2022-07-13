@@ -490,6 +490,41 @@ class RecipesService{
       $st->execute();
    }
 
+   public function getRecommendations($id_recipe){
+        $db = DB::getConnection();
+        $st = $db->prepare( 'SELECT id_user FROM p_favourites WHERE id_recipe=:id_recipe GROUP BY id_user' );
+        $st->execute(['id_recipe' => $id_recipe]);
+
+        $id_recommendation = -1;
+        $users = "";
+        while( $row = $st->fetch() ){
+            if($users == "") $users = $users . $row['id_user'];
+            else $users = $users . ',' . $row['id_user'];
+        }
+        if($users != ""){
+            $st = $db->prepare( 'SELECT id_recipe FROM p_favourites WHERE (id_user IN (' . $users . ') AND id_recipe <> :id_recipe) GROUP BY id_recipe ORDER BY count(*) DESC LIMIT 1' );
+            $st->execute(['id_recipe' => $id_recipe]);
+
+            while( $row = $st->fetch() ){
+                $id_recommendation = $row['id_recipe'];
+            }
+        }
+        if($id_recommendation > -1){
+            return $this->getRecipeById($id_recommendation);
+        }
+        else{
+            $st = $db->prepare( 'SELECT AVG(rate) as avgrate, id_recipe FROM p_recipes_rates WHERE id_recipe <> :id_recipe GROUP BY id_recipe ORDER BY avgrate DESC LIMIT 1' );
+            $st->execute(['id_recipe' => $id_recipe]);
+
+        $id_recommendation = -1;
+        while( $row = $st->fetch() ){
+            $id_recommendation = $row['id_recipe'];
+        }
+        return $this->getRecipeById($id_recommendation);
+        }
+   }
+
+
 }
 
 ?>

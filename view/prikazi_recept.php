@@ -53,7 +53,6 @@
     margin: 0.6vw;
     margin-left: 7vw;
     margin-right: 7vw;
-    margin-bottom: 20vw;
     margin-top: 0vw;
     background-color: #F9E3E3;
     padding: 1.5vw;">
@@ -85,5 +84,29 @@
       }?>
     </section>
 </article>
+<div class="uvod" style="
+    border: 1px solid #000000;/*black;*/
+    font-size: 1.15rem;
+    position:relative;
+    top:0;
+    width:78vw;
+    margin-left: 7vw;
+    margin-right: 7vw;
+    margin-bottom: 20vw;
+    margin-top: 0vw;
+    background-color: #F9E3E3;
+    padding: 1.5vw;">
+  <h5>Korisnicima kojima se svidio ovaj recept, svidio se i recept ... </h5>
+
+
+    <div class="prvidiv">
+    <div class="tekst">
+      <a <?php echo 'href="recipes.php?rt=recipes/'.$prijedlog_recepta->title.'"'; ?>><img src="<?php echo $prijedlog_recepta->link; ?>" alt="slika" style="width:100%"></a>
+      <?php echo '<a class="nav-link" href="recipes.php?rt=recipes/'.$prijedlog_recepta->title.'"><h3>'. $prijedlog_recepta->title .'</h3></a>'; ?>
+    </div>
+  </div>
+  <br><br>
+
+</div>
 
 <?php require_once __DIR__ . '/_footer.php'; ?>

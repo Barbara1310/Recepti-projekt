@@ -82,6 +82,7 @@ class recipesController
     $komentariRecepta = $rs->getRecipeComments($recept_id);
     $prosjecnaOcjena = $rs->getAverageRating($recept_id);
     $omiljeni = $rs->getMyFavourites();
+    $prijedlog_recepta = $rs->getRecommendations($recept_id);
     //$nijeFavorit = $rs->getFavourite($recept_id, $_SESSION['id_user']);
     require_once __DIR__ . '/../view/prikazi_recept.php';
   }
@@ -106,6 +107,7 @@ class recipesController
     $komentariRecepta = $rs->getRecipeComments($recept_id);
     $prosjecnaOcjena = $rs->getAverageRating($recept_id);
     $omiljeni = $rs->getMyFavourites();
+    $prijedlog_recepta = $rs->getRecommendations($recept_id);
     require_once __DIR__ . '/../view/prikazi_recept.php';
   }
 
@@ -125,6 +127,7 @@ class recipesController
     $komentariRecepta = $rs->getRecipeComments($recept_id);
     $prosjecnaOcjena = $rs->getAverageRating($recept_id);
     $omiljeni = $rs->getMyFavourites();
+    $prijedlog_recepta = $rs->getRecommendations($recept_id);
     require_once __DIR__ . '/../view/prikazi_recept.php';
   }
 
