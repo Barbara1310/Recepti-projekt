@@ -77,7 +77,7 @@
           <img src="https://cdn1.vectorstock.com/i/thumb-large/80/75/logo-design-element-chef-restaurant-cook-vector-4878075.jpg" 
           class="mr-3" alt="kuhar" style = "border: 1px solid #000000; width: 4vw;" >
           <div class="media-body" style = "font-size: 1.15rem;">
-              <h4 class="mt-0" style = "font-size: 1.2rem; font-weight: bold;"><?php echo $author; ?></h4>
+              <h4 class="mt-0" style = "font-size: 1.2rem; font-weight: bold;"><?php echo '<p id="' . $kom->id_user .'" class="autorKomentara">' . $author . '</p>'; ?></h4>
               <p><?php echo $kom->comment; ?></p>
           </li>
         <?php } ?>
@@ -102,5 +102,21 @@
   </div>
   </section>
 </article>
+
+<script>
+  $(document).ready(function()
+        {
+            $('.mt-0').on('click', function()
+            {
+                let idAutora = $(event).prop('id');
+                let autorKomentara = $(event).val();
+                console.log(idAutora);
+                console.log(autorKomentara);
+  
+                console.log('idemo');
+            });   
+        });
+
+</script>
 
 <?php require_once __DIR__ . '/_footer.php'; ?>

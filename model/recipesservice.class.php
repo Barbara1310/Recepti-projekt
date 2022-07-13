@@ -479,6 +479,49 @@ class RecipesService{
 
    }
 
+   public function getSumRating($id_recipe)
+   { 
+    $rates = [];
+     try
+ 		 {
+ 			$db = DB::getConnection();
+ 			$st = $db->prepare( 'SELECT rate FROM p_recipes_rates WHERE id_recipe=:id_recipe' );
+ 			$st->execute(['id_recipe' => $id_recipe]);
+ 		 }
+ 		 catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+
+     while( $row = $st->fetch() ){
+           $rates[] = $row['rate'];
+     }
+     $rateSum = 0;
+     $rateLength = count($rates);
+     if($rateLength == 0) return $rateSum;
+     foreach($rates as $r){
+      $rateSum += $r;
+     }
+     return $rateSum;
+
+   }
+
+   public function getNumberOfRatings($id_recipe)
+   { 
+    $rates = [];
+     try
+ 		 {
+ 			$db = DB::getConnection();
+ 			$st = $db->prepare( 'SELECT rate FROM p_recipes_rates WHERE id_recipe=:id_recipe' );
+ 			$st->execute(['id_recipe' => $id_recipe]);
+ 		 }
+ 		 catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+
+     while( $row = $st->fetch() ){
+           $rates[] = $row['rate'];
+     }
+     $rateLength = count($rates);
+     return $rateLength;
+
+   }
+
    public function addNewFavourite($id_recipe)
    {
       $db = DB::getConnection();

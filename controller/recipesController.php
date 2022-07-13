@@ -79,6 +79,8 @@ class recipesController
     $komentariRecepta = $rs->getRecipeComments($recept_id);
     $prosjecnaOcjena = $rs->getAverageRating($recept_id);
     $omiljeni = $rs->getMyFavourites();
+    $sumaOcjena = $rs->getSumRating($recept_id);
+    $brojOcjena = $rs->getNumberOfRatings($recept_id);
     $prijedlog_recepta = $rs->getRecommendations($recept_id);
     $ocjena = $rs->getMyRating($recept_id);
     //$nijeFavorit = $rs->getFavourite($recept_id, $_SESSION['id_user']);
@@ -105,6 +107,8 @@ class recipesController
     $komentariRecepta = $rs->getRecipeComments($recept_id);
     $prosjecnaOcjena = $rs->getAverageRating($recept_id);
     $omiljeni = $rs->getMyFavourites();
+    $sumaOcjena = $rs->getSumRating($recept_id);
+    $brojOcjena = $rs->getNumberOfRatings($recept_id);
     $prijedlog_recepta = $rs->getRecommendations($recept_id);
     $ocjena = $rs->getMyRating($recept_id);
     require_once __DIR__ . '/../view/prikazi_recept.php';
@@ -126,6 +130,8 @@ class recipesController
     $komentariRecepta = $rs->getRecipeComments($recept_id);
     $prosjecnaOcjena = $rs->getAverageRating($recept_id);
     $omiljeni = $rs->getMyFavourites();
+    $sumaOcjena = $rs->getSumRating($recept_id);
+    $brojOcjena = $rs->getNumberOfRatings($recept_id);
     $prijedlog_recepta = $rs->getRecommendations($recept_id);
     $ocjena = $rs->getMyRating($recept_id);
     require_once __DIR__ . '/../view/prikazi_recept.php';
@@ -147,6 +153,8 @@ class recipesController
     $komentariRecepta = $rs->getRecipeComments($recept_id);
     $prosjecnaOcjena = $rs->getAverageRating($recept_id);
     $omiljeni = $rs->getMyFavourites();
+    $sumaOcjena = $rs->getSumRating($recept_id);
+    $brojOcjena = $rs->getNumberOfRatings($recept_id);
     $prijedlog_recepta = $rs->getRecommendations($recept_id);
     $ocjena = $_POST['mojaOcejna']; //$rs->getMyRating($recept_id);
     require_once __DIR__ . '/../view/prikazi_recept.php';

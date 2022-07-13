@@ -1,5 +1,7 @@
 <!--<form action="recipes.php?rt=recipes/dodajOcjenu" method="post">-->
 <?php echo '<input type="hidden" name="id_recepta" id="id_recepta" value = "' . $recept->id . '">'; ?>
+<?php echo '<input type="hidden" name="sumaOcjena" value = "' . $sumaOcjena . '">'; ?>
+<?php echo '<input type="hidden" name="brojOcjena" value = "' . $brojOcjena . '">'; ?>
 <div style =" align:center; ">
     <?php
         if($ocjena != NULL ){
@@ -14,7 +16,7 @@
             </p>
     <?php }
     else { 
-        echo '<p id="infoOcjena"> Još niste ocjenili recept!</p>';
+        echo '<p id="infoOcjena2"> Još niste ocijenili recept!</p>';
         ?>
     <div class = "star-rating" id = "zvijezdice">
         <input type="radio" name="rating" id="star5" value = "5" class ="stars">
@@ -62,24 +64,40 @@
                         success: function( data ) {
                             $("#show_alert").html('<div class="alert alert-success" role="alert">Uspješno dodano</div>');
                             console.log('uspjesno');
-                            $("#infoOcjena").html('Vaša ocjena: ' + mojaOcjena);
+                            $("#infoOcjena2").html('Vaša ocjena: ');
                             $("#ocjeni").hide();
                             $("#zvijezdice").hide();
                             for(let i=1; i <= mojaOcjena; i++ ){
+                                console.log('i je ' + i);
                                 let zvijezdica = $("<span>");
                                 zvijezdica.prop('class', 'mojaZvijezdica');
                                 zvijezdica.html('★');
-                                zvijezdica.prop(checked, true);
-                                $("#infoOcjena").append(zvijezdica);
+                                zvijezdica.val('★');
+                                //zvijezdica.prop('checked', true);
+                                $("#infoOcjena2").append(zvijezdica);
                             }
-                            for(let i= mojaOcjena+1; i<=5; i++ ){
+                            console.log('mojaOcjena je ' + mojaOcjena);
+                            for(let j=1 + mojaOcjena; j < 6; j++ ){
+                                console.log('j je ' + j);
                                 let zvijezdica = $("<span>");
                                 zvijezdica.prop('class', 'mojaZvijezdica');
                                 zvijezdica.html('☆');
-                                $("#infoOcjena").append(zvijezdica);
+                                zvijezdica.val('☆');
+                                $("#infoOcjena2").append(zvijezdica);
                             }
-                            if($("#prosjecnaOcjena").val()=='Nema ocjena:('){
+                            //console.log($("#infoOcjena2"));
+                            if($("#pro").val()=='Nema ocjena:(' || $("#pro").html()=='Nema ocjena:('){
                                 $("#pro").val(mojaOcjena);
+                                $("#pro").html(mojaOcjena);
+                            }
+                            else{
+                                console.log('pro' + $("#pro").val());
+                                console.log('pro' + $("#pro").html());
+                                let brojOcjena = $("#brojOcjena").val();
+                                let sumaOcjena = $("#sumaOcjena").val();
+                                console.log((sumaOcjena + mojaOcjena)/(brojOcjena +1));
+                                $("#pro").val((sumaOcjena + mojaOcjena)/(brojOcjena +1));
+                                $("#pro").html((sumaOcjena + mojaOcjena)/(brojOcjena +1));
                             }
                     
                         },
