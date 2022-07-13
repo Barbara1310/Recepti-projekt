@@ -22,45 +22,49 @@ require_once __DIR__ . '/_header.php';
     <label>Sastojak:</label>
     <input type="text" name="sastojak" id="sastojak" placeholder="Sastojak">
     <br>
-    <button type="submit" name="save" class="btn btn-primary">Traži</button>
+    <button type="submit" name="save" class="btn btn-primary" id = "trazi">Traži</button>
 </div>    
 </form>
-    </body>
+</body>
 </html>
 
 <script>
-  $(document).ready(function(){
+$(document).ready(function(){
     $('#sastojak').tokenfield({
-        autocomplete :{
+        autocomplete : {
             source: function(request, response)
             {
-                jQuery.get('/../model/ingredientsAutocomplete.php', {
-                    term : request.term
-                }, function(data){
-                    data = JSON.parse(data);
-                    response(data);
+                $.ajax({
+                    url: '../Recepti-projekt//model/ingredientsAutocomplete.php',
+                    dataType: "json",
+                    data: {
+                        term: request.term
+                    },
+                    success: function(result) { response(result); }
                 });
-            },
-            delay: 100
+            }        
         }
     });
-  });
-    $(document).ready(function(){
+
     $('#kategorija').tokenfield({
-        autocomplete :{
+        autocomplete: {
             source: function(request, response)
             {
-                jQuery.get('/../model/categoriesAutocomplete.php', {
-                    term : request.term
-                }, function(data){
-                    data = JSON.parse(data);
-                    response(data);
+                $.ajax({
+                    url: '../Recepti-projekt/model/categoriesAutocomplete.php',
+                    dataType: "json",
+                    data: {
+                        term: request.term
+                    },
+                    success: function(result) { response(result); }
                 });
-            },
-            delay: 100
-        }
+            }
+        }       
     });
+  
   });
+
+
 </script>
 
 
