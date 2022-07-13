@@ -44,9 +44,9 @@ class recipesController
     {
       $title='Pretraži recepte';
       $rs = new RecipesService();
-      $kategorije = [];
-      $kategorije = $rs->getAllCategories();
       $recepti_za_prikaz = [];
+      $sastojci = "";
+      $kategorije = "";
       require_once __DIR__ . '/../view/pretraga.php'; //
 
     }
@@ -57,10 +57,7 @@ class recipesController
       $rs = new RecipesService();
       $kategorije = [];
       $kategorije = $rs->getAllCategories();
-      require_once __DIR__ . '/../view/dodaj_recept.php'; //
-
-
-
+      require_once __DIR__ . '/../view/dodaj_recept.php'; 
     }
 
     public function handleSearch(){
@@ -70,7 +67,7 @@ class recipesController
 
       $rs = new RecipesService();
       $recepti_za_prikaz = $rs->findRecipes($sastojci, $kategorije);
-      
+
       require_once __DIR__ . '/../view/pretraga.php'; //
     }
 

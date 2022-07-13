@@ -108,8 +108,6 @@ class RecipesService{
     {
         $db = DB::getConnection();
         $st = $db->prepare( 'SELECT DISTINCT id_category FROM p_categories' );
-
-
     }
 
     public function getTodayRecipes() //vraća polje koje sadrži id-jeve današnjih recepata
@@ -269,43 +267,53 @@ class RecipesService{
    public function findRecipes($ingredient, $category){
         $db = DB::getConnection();
 
+
         // id kategorija
         $recipes_by_ingr = [];
         $category_ids = "";
         $recipes_in_category = [];
 
 
-        $ingredients = explode(',', $ingredient);
+        $ingredients = explode(', ', $ingredient);
         $ingredients_str = "";
         for($i = 0; $i < count($ingredients); $i += 1){
-            $ingredients_str = $ingredients_str . "'" . $ingredients[$i] . "', ";
+            if($i == 0) $ingredients_str = "'" . $ingredients[$i] . "'";
+            $ingredients_str = $ingredients_str . ",'" . $ingredients[$i] . "'";
         }
-        $st = $db->prepare( 'SELECT id_recipe FROM p_recipes_ingredients WHERE ingredient IN (' . $ingredients_str . ' "")');
-        $st->execute();
 
-       while( $row = $st->fetch() ){
-           array_push($recipes_by_ingr, $row['id_recipe']);
-       }
+        if($ingredients_str != ""){
+            $st = $db->prepare( 'SELECT id_recipe FROM p_recipes_ingredients WHERE ingredient IN (' . $ingredients_str . ')');
+            $st->execute();
 
-        $categories = explode(',', $category);
+            while( $row = $st->fetch() ){
+               array_push($recipes_by_ingr, $row['id_recipe']);
+            }
+        }
+
+
+        $categories = explode(', ', $category);
         $categories_str = "";
         for($i = 0; $i < count($categories); $i += 1){
-            $categories_str = $categories_str . "'" . $categories[$i] . "', ";
-        }
+            if($i == 0) $categories_str = "'" . $categories[$i] . "'";
+            else $categories_str = $categories_str . ",'" . $categories[$i] . "'";
 
-        $st = $db->prepare( 'SELECT id FROM p_categories WHERE name IN (' . $categories_str . '\'\')');
+        }
+        $q = 'SELECT id FROM p_categories WHERE name IN (' . $categories_str . ')';
+        
+        $st = $db->prepare( 'SELECT id FROM p_categories WHERE name IN (' . $categories_str . ')');
         $st->execute();
         while( $row = $st->fetch() ){
-            $category_ids = $category_ids . $row['id'] . ',';
+            if($category_ids == "") $category_ids = $row['id'];
+            else $category_ids = $category_ids . "," . $row['id'];
         }
-
-
-
-        $st = $db->prepare( 'SELECT id_recipe FROM p_recipes_categories WHERE id_category IN (' . $category_ids . '-1);');
-        $st->execute();
-
-        while( $row = $st->fetch() ){
-            array_push($recipes_in_category, $row['id_recipe']);
+       
+        if($category_ids != ""){
+            $st = $db->prepare( 'SELECT id_recipe FROM p_recipes_categories WHERE id_category IN (' . $category_ids . ');');
+            $st->execute();
+            
+            while( $row = $st->fetch() ){
+                array_push($recipes_in_category, $row['id_recipe']);
+            }
         }
 
         $recipes_id = [];
