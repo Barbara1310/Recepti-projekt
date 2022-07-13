@@ -11,6 +11,27 @@ body {
         background-size: cover;
 }
 
+.alert {
+  padding: 20px;
+  background-color: #f44336;
+  color: white;
+}
+
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.closebtn:hover {
+  color: black;
+}
+
 input[type=text], input[type=password] {
   width: 100%;
   padding: 20px 20px;
@@ -136,7 +157,7 @@ span.psw {
       <br>
       <input type="password" placeholder="Re-enter Password" name="re-password">
       <br>
-      <input type="password" placeholder="Enter email" name="email">
+      <input type="text" placeholder="Enter email" name="email">
       <br>
       <button type="submit" name="button">Register</button>
       <button type="button" onclick="document.getElementById('register').style.display='none'" class="cancel-button">Cancel</button>

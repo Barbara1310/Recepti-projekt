@@ -35,9 +35,6 @@ class recipesController
       $recepti = $rs->getMyFavourites();
 
       require_once __DIR__ . '/../view/moji_recepti.php'; //isti je view kao i za moje recepte pa možemo koristiti taj ponovno
-
-
-
     }
 
   public function pretraga() //ovdje će se pretraživati svi recepti

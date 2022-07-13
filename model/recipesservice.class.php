@@ -31,7 +31,6 @@ class RecipesService{
     }
    }
 
-
   // funkcija koja provjerava postoji li neki username u bazi
   public function isUsernameInBase( $username )
   {
@@ -68,20 +67,46 @@ class RecipesService{
     }
    }
 
-// funkcija koja dodaje novog korisnika u bazu
-  public function insertUserToBase( $username, $password, $email )
+  public function check_valid_verification( $code, $email )
   {
     $db = DB::getConnection();
 
     try{
-       $st = $db->prepare('INSERT INTO p_users(username, password_hash, email, has_registered, registration_sequence, is_admin) VALUES (:username, :password, :email, \'1\', \'abc\', \'0\')');
-           $st->execute(array('username' => $username, 'password' => password_hash($password, PASSWORD_DEFAULT), 'email' => $email));
+       $st = $db->prepare( 'SELECT email FROM p_users WHERE email=:email AND registration_sequence = :code' );
+       $st->execute( ['email' => $email, 'code' => $code] );
+   }catch( PDOException $e ){echo $e->getMessage();}
+   $row = $st->fetch();
+   if( $row === false ){
+       return false;
+   }
+   else{
+        return true;
+    }
+   }
+
+     public function activate_user( $email )
+  {
+    $db = DB::getConnection();
+
+    try{
+       $st = $db->prepare( 'UPDATE p_users SET has_registered = 1 WHERE email = :email' );
+       $st->execute( ['email' => $email] );
+   }catch( PDOException $e ){echo $e->getMessage();}
+   
+   }
+
+// funkcija koja dodaje novog korisnika u bazu
+  public function insertUserToBase($username, $password, $email, $activation_code)
+  {
+    $db = DB::getConnection();
+
+    try{
+       $st = $db->prepare('INSERT INTO p_users(username, password_hash, email, has_registered, registration_sequence, is_admin) VALUES (:username, :password, :email, \'1\', :registration_sequence, \'0\')');
+           $st->execute(array('username' => $username, 'password' => password_hash($password, PASSWORD_DEFAULT), 'email' => $email, 'registration_sequence' => $activation_code));
 
    }catch( PDOException $e ){echo $e->getMessage();}
    $row = $st->rowCount();
    if( $row === 0 ){
-        echo 'greskaaaa ';
-        echo $username . ' ' . $password . ' ' . $email;
        return false;
    }
    else{
