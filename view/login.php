@@ -11,6 +11,14 @@ body {
         background-size: cover;
 }
 
+img {
+  width: 50%;
+  height: auto;
+  position: absolute;
+  top: 10%;
+  left: 25%;
+}
+
 .alert {
   padding: 20px;
   background-color: #f44336;
@@ -42,7 +50,7 @@ input[type=text], input[type=password] {
 }
 
 button {
-  background-color: #F5CBA7;
+  background-color: #A60E2E;
   color: white;
   padding: 10px 20px;
   margin: 5px 0;
@@ -62,7 +70,7 @@ button:hover {
   border: 1px solid #ccc;
   cursor: pointer;
   width: 48%;
-  background-color: #ff0000;
+  background-color: #A60E2E;
 }
 
 .container {
@@ -127,6 +135,7 @@ span.psw {
 </style>
 </head>
 <body>
+<img src="title.png" alt="">
 
 <div class = "buttons-center">
 <button onclick="document.getElementById('login').style.display='block'" style="width:auto;">Login</button>

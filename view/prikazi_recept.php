@@ -1,9 +1,39 @@
 <?php require_once __DIR__ . '/_header.php'; ?>
 
+<style type="text/css">
+
+
+  .card {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  width: 33%;
+  height:  33%;
+  border-radius: 5px;
+  display:inline-block;
+  background-color: #cd8997;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+img {
+  border-radius: 5px 5px 0 0;
+  width: 100%;
+  height: 20vw;
+  object-fit: cover;
+}
+
+.container {
+  padding: 2px 16px;
+}
+
+</style>
+
 <article>
     <section>
     <div class="uvod" style="
-    border: 1px solid #000000;/*black;*/
+      border-radius: 25px;
     font-size: 1.15rem;
     width: 78vw;
     margin: 0.6vw;
@@ -73,9 +103,9 @@
               $author = $korisnik->username;
           }
           ?>
-          <li class="media" style = "padding: 0.3vw; margin: 0.6vw; border: 1px solid #000000;background-color: #FEF3F3;">
+          <li class="media" style = "padding: 0.3vw; margin: 0.6vw; background-color: #FEF3F3;">
           <img src="https://cdn1.vectorstock.com/i/thumb-large/80/75/logo-design-element-chef-restaurant-cook-vector-4878075.jpg" 
-          class="mr-3" alt="kuhar" style = "border: 1px solid #000000; width: 4vw;" >
+          class="mr-3" alt="kuhar" style = " width: 4vw;" >
           <div class="media-body" style = "font-size: 1.15rem;">
               <h4 class="mt-0" style = "font-size: 1.2rem; font-weight: bold;"><?php echo '<p id="' . $kom->id_user .'" class="autorKomentara">' . $author . '</p>'; ?></h4>
               <p><?php echo $kom->comment; ?></p>
@@ -87,18 +117,22 @@
     font-size: 1.15rem;
     margin: 0.6vw;
     margin-left: 0vw;
+    color:  #A60E2E;
     background-color: #F9E3E3;
     padding: 1.5vw;
     padding-left: 0vw">
-  <h5>Korisnicima kojima se svidio ovaj recept, svidio se i recept ... </h5>
+  <h5 style="color: #A60E2E;">Korisnicima kojima se svidio ovaj recept, svidio se i recept ... </h5>
 
-
-    <div class="prvidiv">
-    <div class="tekst">
-      <a <?php echo 'href="recipes.php?rt=recipes/'.$prijedlog_recepta->title.'"'; ?>><img src="<?php echo $prijedlog_recepta->link; ?>" alt="slika" style="width:100%"></a>
-      <?php echo '<a class="nav-link" href="recipes.php?rt=recipes/'.$prijedlog_recepta->title.'"><h3>'. $prijedlog_recepta->title .'</h3></a>'; ?>
-    </div>
+<a <?php echo 'href="recipes.php?rt=recipes/'.$prijedlog_recepta->title.'"'; ?> >
+<div class="card">
+<img src="<?php echo $prijedlog_recepta->link; ?>" alt="slika" style="width:100%">
+<div class="container">
+    <h3 style="color: #A60E2E;"><?php echo $prijedlog_recepta->title; ?></h3>
+    <p style="color: #A60E2E;">⏱️<?php echo $prijedlog_recepta->duration; ?></p> 
   </div>
+</div>
+</a>
+
   </div>
   </section>
 </article>

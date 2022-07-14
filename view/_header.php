@@ -13,10 +13,10 @@
   <title>RecipesApp</title>
   <style>
 	  .h3{
-		font-family: "Brush Script MT", "Lucida Handwriting";
+		font-family: Verdana, Geneva, sans-serif;
 		font-style: italic;
 		text-align: center;
-		color: red;
+		color: #A60E2E;
 	  }
     .column {
   column-gap: 10px;
@@ -97,11 +97,10 @@
   content: '\2605';
 }
 .gubmic{
-  align:center; border: 1px solid #000000;/*black;*/
+  align:center; border: 1px solid #A60E2E;
   color:  #F9E3E3;/*lightsteelblue;*/
+  background-color: #A60E2E;
   font-family: 'Goudy Old Style', Garamond, 'Big Caslon', 'Times New Roman';
-  background-image:
-  url(https://wallpapercave.com/wp/wp3114035.jpg);
   width: 9vw;
   height: 5vh;
   font-size: 1.15rem;
@@ -136,15 +135,17 @@
   </a> -->
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="recipes.php?rt=recipes/index">Recepti</a>
+      <a class="navbar-brand" href="recipes.php?rt=recipes/index">
+        <img src="title.png" style = "height: 40px">
+      </a>
     </div>
     <ul class="navbar-nav">
-      <li class="nav-item"><a class="nav-link" href="recipes.php?rt=recipes/recepti">Moji recepti</a></li>
-      <li class="nav-item"><a class="nav-link" href="recipes.php?rt=recipes/favoriti">Moji favoriti</a></li>
-      <li class="nav-item"><a class="nav-link" href="recipes.php?rt=recipes/pretraga">Pretraži recepte</a></li>
-	  <li class="nav-item"><a class="nav-link" href="recipes.php?rt=recipes/dodaj">Dodaj novi recept</a></li>
+      <li class="nav-item"><a style = "color: #A60E2E" class="nav-link" href="recipes.php?rt=recipes/recepti">Moji recepti</a></li>
+      <li class="nav-item"><a style = "color: #A60E2E" class="nav-link" href="recipes.php?rt=recipes/favoriti">Moji favoriti</a></li>
+      <li class="nav-item"><a style = "color: #A60E2E" class="nav-link" href="recipes.php?rt=recipes/pretraga">Pretraži recepte</a></li>
+	  <li class="nav-item"><a style = "color: #A60E2E" class="nav-link" href="recipes.php?rt=recipes/dodaj">Dodaj novi recept</a></li>
     <?php if($_SESSION['is_admin'] === '1')  { echo "<li class=\"nav-item\"><a class=\"nav-link\" href=\"recipes.php?rt=categories/addCategory\">Dodaj kategoriju</a></li> "; } ?>
-    <li class="nav-item"><a class="nav-link" href="recipes.php?rt=users/logout">Odjavi se</a></li>
+    <li class="nav-item"><a style = "color: #A60E2E" class="nav-link" href="recipes.php?rt=users/logout">Odjavi se</a></li>
     </ul>
   </div>
 </nav>

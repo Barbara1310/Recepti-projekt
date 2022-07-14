@@ -1,3 +1,6 @@
+<?php require_once __DIR__ . '/_header.php'; ?>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,11 +13,21 @@
   <title>RecipesApp</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.1/css/bootstrap.min.css"/>
   <style>
+
+body {
+  font-family: Arial, Helvetica, sans-serif; 
+        background-repeat: no-repeat;
+        background-attachment: fixed;  
+        background-size: auto;
+        background-position: center bottom; /*Positioning*/
+
+}
+
 	  .h3{
 		font-family: "Brush Script MT", "Lucida Handwriting";
 		font-style: italic;
 		text-align: center;
-		color: red;
+		color: white;
 	  }
     .column {
   float: left;
@@ -31,47 +44,28 @@
   margin-left: auto;
 }
 .tekst {
-  background-color: #F75D59;
+  background-color: white;
   padding: 10px;
 }
   </style>
 
 </head>
-<body class="bg-secondary">
-
-	<nav class="navbar navbar-expand-sm bg-light navbar-light">
-	<!--<a class="navbar-brand" href="https://cdn.pixabay.com/photo/2020/10/31/10/56/chef-5700886_1280.png">
-	<img src="chef.jpg" alt="Logo" style="width:40px;">
-  </a> -->
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="recipes.php?rt=recipes/index">Recepti</a>
-    </div>
-    <ul class="navbar-nav">
-      <li class="nav-item"><a class="nav-link" href="recipes.php?rt=recipes/recepti">Moji recepti</a></li>
-      <li class="nav-item"><a class="nav-link" href="recipes.php?rt=recipes/favoriti">Moji favoriti</a></li>
-      <li class="nav-item"><a class="nav-link" href="recipes.php?rt=recipes/pretraga">Pretraži recepte</a></li>
-	  <li class="nav-item"><a class="nav-link" href="recipes.php?rt=recipes/dodaj">Dodaj novi recept</a></li>
-      <?php if($_SESSION['is_admin'] === '1')  { echo "<li class=\"nav-item\"><a class=\"nav-link\" href=\"recipes.php?rt=categories/addCategory\">Dodaj kategoriju</a></li> "; } ?>
-    <li class="nav-item"><a class="nav-link" href="recipes.php?rt=users/logout">Odjavi se</a></li>
-    </ul>
-  </div>
-</nav>
+<body style = "background-color: white;">
 
 
-<h3 class="h3 my-2 font-weight-light"><?php echo $title; ?></h3>
+<h3 class="h3 my-2 font-weight-light" style = "background-color: white;"><?php echo $title; ?></h3>
 
 <!-- Tu ide forma za unos recepta -->
-<div class="container">
-  <div class="row my-4">
-    <div class="col-lg-10 mx-auto">
-      <div class="card shadow">
-        <div class="card-header">
-          <h4>Dodaj recept</h4>
+<div class="container" style = "background-color: white;">
+  <div class="row my-4" style = "background-color: white;">
+    <div class="col-lg-10 mx-auto" style = "background-color: white;">
+      <div class="card shadow" style = "background-color: white;">
+        <div class="card-header" style = "background-color: white;">
+          <h4 style="color: #A60E2E">Dodaj recept</h4>
         </div>
-        <div class="card-body p-4">
+        <div class="card-body p-4" style = "background-color: white;">
           <div id="show_alert"></div>
-          <form class="#" method="post" id="add_form">
+          <form class="#" method="post" id="add_form" style = "background-color: white;">
             <div id="show_item">
               <div class="row">
                 <div class="col-md-4 mb-3">
@@ -111,7 +105,7 @@
             </div>
 
             <div class="">
-              <input type="submit" id="add_btn" value="Dodaj" class="btn btn-primary w-25">
+              <input type="submit" id="add_btn" value="Dodaj" class="btn btn-primary w-25" style="background-color: #A60E2E; border-color: #A60E2E; ; ">
             </div>
           </form>
 

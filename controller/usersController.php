@@ -81,13 +81,13 @@ class UsersController{
         $_SESSION['username'] = $_POST['username']; //zelimo jos u session ubaciti i id korisnika
         $rs->setUserId( $username ); //ta fja nam vadi id korisnika iz baze i ubaci ga u session
         
-        $activation_link = "https://rp2.studenti.math.hr/~margegi/Recepti-projekt/model/verification.php/?email=". $email . "&activation_code=" . $activation_code;
+        $activation_link = "https://rp2.studenti.math.hr/~barposav/Recepti-projekt/model/verification.php/?email=". $email . "&activation_code=" . $activation_code;
         echo '<script language="javascript">';
         echo 'alert(".' . $activation_link . '")';
         echo '</script>';
         echo "link koji saljemo je " . $activation_link;
         
-        mail('rp.recepti@outlook.com', 'Verifikacija', "Kliknite na link: " . $activation_link);
+        mail($email, 'Verifikacija', "Kliknite na link: " . $activation_link);
         header('Location: recipes.php?rt=recipes/index'); //idi na recipesController i index fju
         
       }

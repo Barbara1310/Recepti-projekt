@@ -13,29 +13,29 @@
     {
     ?>
         <button id="dodajFavorit" name="dodajMojFavorit" type="submit"  style = "align:center; border: 1px solid #000000;/*black;*/
-        color:  #F9E3E3;/*lightsteelblue;*/
+        color:  white;/*lightsteelblue;*/
         font-family: 'Goudy Old Style', Garamond, 'Big Caslon', 'Times New Roman';
-        background-image:
-        url(https://wallpapercave.com/wp/wp3114035.jpg);
-        width: 9vw;
+        background-color: #A60E2E;
+        width: 12vw;
         height: 5vh;
         font-size: 1.15rem;
         text-align:center;
-        border-radius: 5vw;
+        border-radius: 25px;
+        border-color: #A60E2E;
         margin-bottom: 1vw" >Dodaj u favorite.</button>
         <?php
         } 
     else{ ?>
           <button id="makniFavorit" name="makniMojFavorit" type="submit" style = " align:center; border: 1px solid #000000;/*black;*/
-        color:  #F9E3E3;/*lightsteelblue;*/
+        color:  white;/*lightsteelblue;*/
         font-family: 'Goudy Old Style', Garamond, 'Big Caslon', 'Times New Roman';
-        background-image:
-        url(https://wallpapercave.com/wp/wp3114035.jpg);
-        width: 9vw;
+        background-color: #A60E2E;
+        width: 12vw;
         height: 5vh;
         font-size: 1.15rem;
         text-align:center;
-        border-radius: 5vw;
+        border-radius: 25px;
+        border-color: #A60E2E;
         margin-bottom: 1vw" >Dodano u favorite.</button>
     <?php } ?>
 </form>
