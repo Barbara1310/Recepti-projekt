@@ -69,7 +69,13 @@ img {
         <dt class="col-md-3">Trajanje pripreme:</dt>
         <dd class="col-md-9"><?php  echo $recept->duration;?></dd>
         <dt class="col-md-3">Kategorije:</dt>
-        <dd class="col-md-9"><?php  foreach($kategorijeRecepta as $kat ){ echo '<button class="zadanaKategorija gubmic">' . $kat->name . '</button> '; } ?></dd>
+        <dd class="col-md-9"><?php  foreach($kategorijeRecepta as $kat ){ 
+          echo '<form class="form" id = "pretraga" method="post" action="recipes.php?rt=recipes/handleSearch">';
+          echo '<input hidden type="text" name="kategorija" id="kategorija" value="' . $kat->name  .'">';
+          echo '<input hidden type="text" name="sastojak" id="sastojak" value="' . null  .'">';
+          echo '<button type="submit" class="zadanaKategorija gubmic">' . $kat->name . '</button> '; } 
+          echo '</form>';
+          ?></dd>
         <!--<dt class="col-md-3">Prosječna ocjena:</dt>
         <dd class="col-md-9"><?php/*
         for($i = 1; $i <= $prosjecnaOcjena; $i++)
